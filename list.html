@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Usaha Dashboard</title>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        /* Import fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #1a73e8;
+            --secondary-blue: #4285f4;
+            --light-blue: #e8f0fe;
+            --dark-blue: #174ea6;
+            --border-color: #e0e6ed;
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --white: #ffffff;
+            --shadow: 0 2px 6px rgba(26, 115, 232, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* Header Styling */
+        .header {
+            background: var(--primary-blue);
+            padding: 1rem 0;
+            margin: 0;
+            color: var(--white);
+        }
+
+        .header-content {
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Loading Spinner */
+        .loading-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--light-blue);
+            border-top: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Filter Container */
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .date-filter {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .filter-button {
+            padding: 0.5rem 1rem;
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-button:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Search Container */
+        .search-container {
+            width: 100%;
+            padding: 1rem;
+            background: var(--white);
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Table Container */
+        .table-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: var(--white);
+        }
+
+        /* DataTable Styling */
+        .dataTables_wrapper {
+            padding: 0;
+            width: 100%;
+        }
+
+        table.dataTable {
+            width: 100% !important;
+            margin: 0 !important;
+            border-collapse: collapse !important;
+        }
+
+        table.dataTable thead th {
+            background: var(--light-blue);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid var(--primary-blue);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        table.dataTable tbody td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        table.dataTable tbody tr:hover {
+            background-color: var(--light-blue);
+            transition: background-color 0.2s ease;
+        }
+
+        /* Popup Styling */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 500px;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .popup-close {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .popup-close:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .popup-body p {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--light-blue);
+            border-radius: 6px;
+        }
+
+        .popup-button {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-blue);
+            border: none;
+            border-radius: 6px;
+            color: var(--white);
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .popup-button:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 0.75rem;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .date-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                padding: 0.75rem;
+            }
+
+            table.dataTable thead th,
+            table.dataTable tbody td {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .popup-content {
+                width: 95%;
+                margin: 0.75rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-blue);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <h1 class="header-title">Data Usaha Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-container" id="loading-spinner">
+        <div class="spinner"></div>
+        <p>Memuat data...</p>
+    </div>
+
+    <!-- Filter Container -->
+    <div class="filter-container">
+        <div class="date-filter">
+            <span>Dari:</span>
+            <input type="date" id="start-date" class="date-input">
+        </div>
+        <div class="date-filter">
+            <span>Sampai:</span>
+            <input type="date" id="end-date" class="date-input">
+        </div>
+        <button id="apply-filter" class="filter-button">
+            <i class="bi bi-funnel"></i>
+            Terapkan Filter
+        </button>
+        <button id="reset-filter" class="filter-button" style="background: var(--text-secondary);">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Reset
+        </button>
+    </div>
+
+    <!-- Search Box -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="global-search" class="search-input" placeholder="Cari data...">
+            <i class="bi bi-search search-icon"></i>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <table id="data-table" class="display">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Waktu</th>
+                    <th>Nama Usaha</th>
+                    <th>Nama</th>
+                    <th>Alamat</th>
+                    <th>No HP</th>
+                    <th>Usia</th>
+                    <th>Opening</th>
+                    <th>Pekerjaan</th>
+                    <th>Alamat Usaha</th>
+                    <th>Dana Usaha</th>
+                    <th>Sumber Informasi</th>
+                    <th>Admin</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>Detail Data Usaha</h2>
+                <span class="popup-close" id="popup-close">&times;</span>
+            </div>
+            <div class="popup-body" id="popup-body"></div>
+            <button class="popup-button">
+                <i class="bi bi-clipboard"></i>
+                Salin Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script>
+        let dataTable;
+        let searchTimeout;
+        let originalData = [];
+
+        $(document).ready(function () {
+            initializeDataTableWithSearch();
+            initializeDateFilters();
+        });
+
+        function formatWaktu(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            return date.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).replace(/\./g, ':');
+        }
+
+        function initializeDateFilters() {
+            $('#apply-filter').on('click', applyDateFilter);
+            $('#reset-filter').on('click', resetDateFilter);
+        }
+
+        function applyDateFilter() {
+            const startDate = new Date($('#start-date').val());
+            const endDate = new Date($('#end-date').val());
+            endDate.setHours(23, 59, 59);
+
+            if (!$('#start-date').val() || !$('#end-date').val()) {
+                alert('Silakan pilih tanggal awal dan akhir');
+                return;
+            }
+
+            dataTable.clear();
+            const filteredData = originalData.filter(row => {
+                const rowDate = new Date(row[0]);
+                return rowDate >= startDate && rowDate <= endDate;
+            });
+
+            dataTable.rows.add(filteredData).draw();
+        }
+
+        function resetDateFilter() {
+            $('#start-date').val('');
+            $('#end-date').val('');
+            dataTable.clear().rows.add(originalData).draw();
+        }
+
+        function initializeDataTableWithSearch() {
+            dataTable = $('#data-table').DataTable({
+                ajax: {
+                    url: 'https://script.google.com/macros/s/AKfycbz3mEsBEWTjSgIMcPFIAyC9_whSgANs3mTYiuEAFIZorrL37V6Y0W9qA7OYvbvnvLOz/exec',
+                    dataSrc: function (json) {
+                        originalData = json;
+                        return json;
+                    },
+                    beforeSend: function () {
+                        $('#loading-spinner').show();
+                    },
+                    complete: function () {
+                        $('#loading-spinner').hide();
+                    },
+                    error: function (xhr, error, thrown) {
+                        $('#loading-spinner').html('<p>Gagal memuat data. Silakan coba lagi.</p>');
+                        console.error('Error:', error);
+                    }
+                },
+                columns: [
+                    { data: null, render: (data, type, row, meta) => meta.row + 1 },
+                    {
+                        data: '0',
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return formatWaktu(data);
+                            }
+                            return data;
+                        }
+                    },
+                    { data: '1' },
+                    { data: '2' },
+                    { data: '3' },
+                    { data: '4' },
+                    { data: '5' },
+                    { data: '6' },
+                    { data: '7' },
+                    { data: '8' },
+                    { data: '9' },
+                    { data: '10' },
+                    { data: '11' }
+                ],
+                scrollX: true,
+                pageLength: 25,
+                deferRender: true,
+                dom: 't<"bottom"lip>',
+                ordering: true,
+                responsive: true,
+                language: {
+                    paginate: {
+                        previous: '<i class="bi bi-chevron-left"></i>',
+                        next: '<i class="bi bi-chevron-right"></i>'
+                    },
+                    lengthMenu: "Tampilkan _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                    infoFiltered: "(difilter dari _MAX_ total data)",
+                    zeroRecords: "Tidak ada data yang cocok",
+                    emptyTable: "Tidak ada data tersedia"
+                }
+            });
+
+            // Global search functionality
+            $('#global-search').on('input', function () {
+                clearTimeout(searchTimeout);
+                const searchValue = this.value;
+                searchTimeout = setTimeout(() => {
+                    dataTable.search(searchValue).draw();
+                }, 300);
+            });
+
+            // Popup functionality
+            $('#data-table tbody').on('click', 'tr', function () {
+                const data = dataTable.row(this).data();
+                if (data) {
+                    showPopup(data);
+                }
+            });
+
+            // Close popup when clicking outside
+            $(window).on('click', function (e) {
+                if ($(e.target).is('.popup-overlay')) {
+                    hidePopup();
+                }
+            });
+
+            // Close popup with close button
+            $('#popup-close').on('click', hidePopup);
+
+            // Close popup with ESC key
+            $(document).on('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    hidePopup();
+                }
+            });
+
+            // Copy functionality
+            $('.popup-button').on('click', copyPopupContent);
+        }
+
+        function showPopup(data) {
+            const content = `
+                <p><strong>Nama:</strong> ${data[2]}</p>
+                <p><strong>Nama Usaha:</strong> ${data[1]}</p>
+                <p><strong>Alamat:</strong> ${data[3]}</p>
+                <p><strong>No HP:</strong> ${data[4]}</p>
+                <p><strong>Admin:</strong> ${data[11]}</p>
+            `;
+            $('#popup-body').html(content);
+            $('#popup-overlay').fadeIn(300).css('display', 'flex');
+
+            // Focus popup for accessibility
+            $('.popup-content').attr('tabindex', '-1').focus();
+        }
+
+        function hidePopup() {
+            $('#popup-overlay').fadeOut(300);
+            // Reset focus
+            $('#global-search').focus();
+        }
+
+        function copyPopupContent() {
+            // Get text from popup body
+            const textToCopy = $('#popup-body')
+                .text()
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line)
+                .join('\n');
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    // Visual feedback
+                    const $button = $('.popup-button');
+                    const originalHtml = $button.html();
+
+                    $button
+                        .html('<i class="bi bi-check-lg"></i> Tersalin!')
+                        .prop('disabled', true);
+
+                    setTimeout(() => {
+                        $button
+                            .html(originalHtml)
+                            .prop('disabled', false);
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Gagal menyalin:', err);
+                    alert('Gagal menyalin data. Silakan coba lagi.');
+                });
+        }
+
+        // Error handling for ajax
+        $(document).ajaxError(function (event, jqXHR, settings, error) {
+            $('#loading-spinner').html(`
+                <div class="error-message">
+                    <p>Terjadi kesalahan saat memuat data.</p>
+                    <button onclick="location.reload()">Muat Ulang</button>
+                </div>
+            `);
+            console.error('Ajax Error:', error);
+        });
+    </script>
+</body>
+
+</html>

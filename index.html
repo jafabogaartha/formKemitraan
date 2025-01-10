@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" 
+    content="Temukan peluang usaha terbaik dengan Paket Usaha Makanan & Minuman yang mudah dijalankan! Cocok untuk pemula, modal kecil, dan cepat balik modal. Mulai bisnis Anda sekarang dengan pilihan usaha makanan dan minuman kekinian, lengkap dengan panduan praktis.">
+    <meta name="robots" content="index, follow">
+    <title>Paket Usaha Makanan & Minuman</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!--google console-->
+    <meta name="google-site-verification" content="google5194e911c1838310" />
+    <meta name="google-site-verification" content="jWffqEOKILt9LSHjZ8FsSR3oyDq8ei-qXzdK4qAy-Sc" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGFCNH8S5P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MGFCNH8S5P');
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NG6J8B8J');</script>
+    <!-- End Google Tag Manager -->
+    
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://paketusaha.web.id",
+            "name": "Paket Usaha Makanan & Minuman",
+            "description": "Temukan peluang bisnis terbaik dengan berbagai pilihan paket usaha makanan dan minuman.",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://paketusaha.web.id/?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
+
+    <!-- OpenGraph meta tags -->
+    <meta property="og:title" content="Paket Usaha Makanan & Minuman">
+    <meta property="og:description"
+        content="Temukan peluang bisnis terbaik Anda dengan berbagai pilihan paket usaha makanan dan minuman yang cocok untuk Anda.">
+    <meta property="og:url" content="https://paketusaha.web.id">
+    <meta property="og:image" content="img/youneedmie.jpg">
+    <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f3ff;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6c2bd9, #5727b0);
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .search-filter {
+            display: flex;
+            margin: 20px auto;
+            max-width: 600px;
+            gap: 10px;
+            padding: 0 15px;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 2px solid #d4c5ff;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6c2bd9;
+        }
+
+        .filter-btn {
+            background-color: #6c2bd9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: #5727b0;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .business-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .business-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .business-content {
+            padding: 15px;
+        }
+
+        .business-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-food {
+            background-color: #6c2bd9;
+            color: white;
+        }
+
+        .badge-drink {
+            background-color: #7c3aed;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #5727b0;
+            color: white;
+            margin-top: 30px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .business-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .search-filter {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            .business-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Paket Usaha Makanan & Minuman</h1>
+            <p>Temukan Peluang Bisnis Terbaik Anda</p>
+        </div>
+
+        <div class="search-filter">
+            <input type="text" class="search-input" id="searchInput" placeholder="Cari paket usaha...">
+            <button class="filter-btn" id="filterBtn">Filter</button>
+        </div>
+
+        <div class="business-grid" id="businessGrid">
+            <!-- Business cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Paket Usaha - Solusi Bisnis Makanan Anda</p>
+    </footer>
+
+
+    <script>
+        const businesses = [
+            { name: "Esteh Ibukota", type: "Minuman", image: "img/estehibukota.jpg", link: "/estehibukota.html" },
+            { name: "Chickichick", type: "Makanan", image: "img/chickichick.jpg", link: "/chickichick.html" },
+            { name: "Chickuruyuk", type: "Makanan", image: "img/chickuruyuk.jpg", link: "/chickuruyuk.html" },
+            { name: "Raja Steak", type: "Makanan", image: "img/rajasteak.jpg", link: "/rajasteak.html" },
+            { name: "Mentoast", type: "Makanan", image: "img/mentoast.jpg", link: "/mentoast.html" },
+            { name: "MyBesttea", type: "Minuman", image: "img/mybestea.jpg", link: "/mybestea.html" },
+            { name: "Nice Coffee", type: "Minuman", image: "img/nicecoffee.jpg", link: "/nicecoffee.html" },
+            { name: "Seblak Express", type: "Makanan", image: "img/seblakexpress.jpg", link: "/seblakexpress.html" },
+            { name: "Tahu Nonyor", type: "Makanan", image: "img/tahunonyor.jpg", link: "/tahunyonyor.html" },
+            { name: "Kopi Ibukota", type: "Minuman", image: "img/kopiibukota.jpg", link: "/kopiibukota.html" },
+            { name: "You Need Mie", type: "Makanan", image: "img/youneedmie.jpg", link: "/youneedmie.html" },
+            { name: "Kentang Gantenk", type: "Makanan", image: "img/kentanggantenk.jpg", link: "/kentanggantenk.html" }
+
+        ];
+
+        const businessGrid = document.getElementById('businessGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtn = document.getElementById('filterBtn');
+
+        function renderBusinesses(filteredBusinesses = businesses) {
+            businessGrid.innerHTML = '';
+            filteredBusinesses.forEach(business => {
+                const card = document.createElement('div');
+                card.classList.add('business-card');
+
+                const badge = business.type === 'Makanan' ? 'badge-food' : 'badge-drink';
+
+                card.innerHTML = `
+                    <a href="${business.link}" style="text-decoration: none; color: inherit;">
+                        <img src="${business.image}" alt="${business.name}" class="business-image">
+                        <div class="business-content">
+                            <div class="business-name">${business.name}</div>
+                            <span class="badge ${badge}">${business.type}</span>
+                        </div>
+                    </a>
+                `;
+
+                businessGrid.appendChild(card);
+            });
+        }
+
+        // Initial render
+        renderBusinesses();
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredBusinesses = businesses.filter(business =>
+                business.name.toLowerCase().includes(searchTerm)
+            );
+            renderBusinesses(filteredBusinesses);
+        });
+
+        // Filter functionality
+        let currentFilter = 'all';
+        filterBtn.addEventListener('click', () => {
+            switch (currentFilter) {
+                case 'all':
+                    currentFilter = 'Makanan';
+                    filterBtn.textContent = 'Makanan';
+                    renderBusinesses(businesses.filter(b => b.type === 'Makanan'));
+                    break;
+                case 'Makanan':
+                    currentFilter = 'Minuman';
+                    filterBtn.textContent = 'Minuman';
+                    renderBusinesses(businesses.filter(b => b.type === 'Minuman'));
+                    break;
+                case 'Minuman':
+                    currentFilter = 'all';
+                    filterBtn.textContent = 'Filter';
+                    renderBusinesses();
+                    break;
+            }
+        });
+    </script>
+</body>
+
+</html>
