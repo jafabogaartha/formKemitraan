@@ -388,7 +388,7 @@
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
-
+    
         const adminDetails = [
             {
                 number: '6282124952606',
@@ -399,7 +399,7 @@
                 name: 'Admin Reka',
             }
         ];
-
+    
         // Dana option selection
         danaOptions.forEach(option => {
             option.addEventListener('click', function () {
@@ -408,7 +408,7 @@
                 danaUsahaInput.value = this.dataset.value;
             });
         });
-
+    
         // Lokasi usaha toggle
         lokasiUsahaSelect.addEventListener('change', () => {
             if (lokasiUsahaSelect.value === 'Sudah') {
@@ -417,22 +417,22 @@
                 additionalAddressDiv.style.display = 'none';
             }
         });
-
+    
         // Get admin based on the current second
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
             return currentSecond <= 30 ? adminDetails[1] : adminDetails[0];
         }
-
+    
         // Submit form
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
             if (!danaUsahaInput.value) {
                 alert('Silakan pilih nominal dana usaha');
                 return;
             }
-
+    
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
@@ -441,18 +441,23 @@
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
             const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
-
+    
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
-
+    
             try {
+                // Get the admin based on time
+                const admin = getAdminBasedOnTime();
+    
+                // Send data to Google Sheets including adminName
+                formData.append('adminName', admin.name);  // Menambahkan nama admin yang dipilih ke formData
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
                 });
-
-                const admin = getAdminBasedOnTime();
+    
+                // Create WhatsApp message
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
                     `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${danaUsaha}.\n` +
@@ -460,16 +465,9 @@
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
-
+    
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
-
-                // Send admin data to Google Sheets
-                formData.append('adminName', admin.name);
-                await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData,
-                });
-
+    
                 // Redirect to WhatsApp
                 window.location.href = waLink;
             } catch (error) {
@@ -478,5 +476,6 @@
             }
         });
     </script>
-</body>
-</html>
+    </body>
+    </html>
+    
