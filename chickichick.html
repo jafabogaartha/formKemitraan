@@ -349,6 +349,11 @@
                     <label for="Keinginan">Kasih tau keinginan kamu, kami bantu wujudkan dengan produk kami?</label>
                     <input type="text" id="Keinginan" name="Keinginan" placeholder="Masukkan Keinginan kamu bersama kami" required>
                 </div>
+                <!-- Nama Usaha (hidden) -->
+                <div class="form-input" style="display:none;">
+                    <label for="Nama Usaha">Nama Usaha</label>
+                    <input type="text" id="Nama Usaha" name="Nama Usaha" value="Chickuruyuk" required placeholder="Masukkan nama usaha">
+                </div>
                 <div class="form-input">
                     <label>Dana Untuk Buka Usaha</label>
                     <div class="dana-options">
@@ -375,6 +380,7 @@
             </form>
         </div>
     </div>
+
     <script>
         const form = document.getElementById('partnership-form');
         const danaOptions = document.querySelectorAll('.dana-option');
@@ -382,6 +388,17 @@
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
+
+        const adminDetails = [
+            {
+                number: '6282124952606',
+                name: 'Admin Livia',
+            },
+            {
+                number: '6281212125422',
+                name: 'Admin Reka',
+            }
+        ];
 
         // Dana option selection
         danaOptions.forEach(option => {
@@ -401,6 +418,12 @@
             }
         });
 
+        // Get admin based on the current second
+        function getAdminBasedOnTime() {
+            const currentSecond = new Date().getSeconds();
+            return currentSecond <= 30 ? adminDetails[1] : adminDetails[0];
+        }
+
         // Submit form
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -417,6 +440,7 @@
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
+            const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
 
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
@@ -428,15 +452,16 @@
                     body: formData,
                 });
 
+                const admin = getAdminBasedOnTime();
                 const waMessage = encodeURIComponent(
-                    `Halo kak admin, saya ${nama} dari ${alamat}.\n\n` +
-                    `Saya tertarik untuk membuka usaha dengan budget ${danaUsaha}.\n` +
+                    `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
+                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${danaUsaha}.\n` +
                     `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
 
-                const waLink = `https://wa.me/6281234567890?text=${waMessage}`;
+                const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
                 window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
