@@ -450,8 +450,8 @@
                 // Get the admin based on time
                 const admin = getAdminBasedOnTime();
     
-                // Send data to Google Sheets including adminName
-                formData.append('adminName', admin.name);  // Menambahkan nama admin yang dipilih ke formData
+                // Send data to Google Sheets including admin
+                formData.append('admin', admin.name);  // Mengganti 'adminName' menjadi 'admin'
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
@@ -475,7 +475,7 @@
                 alert('Pengiriman gagal. Silakan coba lagi.');
             }
         });
-    </script>
+    </script>    
     </body>
     </html>
     
