@@ -304,7 +304,7 @@
                 <p class="hashtag">#2025PunyaUsaha</p>
             </div>
             <form name="form-kontak" id="partnership-form">
-                <!-- Form elements remain the same -->
+                <!-- Form elements -->
                 <div class="form-input">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap">
@@ -340,6 +340,14 @@
                 <div id="additional-address" class="form-input" style="display: none;">
                     <label for="alamat-usaha">Alamat Lokasi Usaha</label>
                     <input type="text" id="alamat-usaha" name="alamat-usaha" placeholder="Masukkan alamat lokasi usaha">
+                </div>
+                <div class="form-input">
+                    <label for="Kendala">Ceritakan masalahmu, biar kami bantu selesaikan dengan produk kami?</label>
+                    <input type="text" id="Kendala" name="Kendala" placeholder="Apa masalahmu, biar kami bantu selesaikan!" required>
+                </div>
+                <div class="form-input">
+                    <label for="Keinginan">Kasih tau keinginan kamu, kami bantu wujudkan dengan produk kami?</label>
+                    <input type="text" id="Keinginan" name="Keinginan" placeholder="Masukkan Keinginan kamu bersama kami" required>
                 </div>
                 <div class="form-input">
                     <label>Dana Untuk Buka Usaha</label>
@@ -403,6 +411,12 @@
             }
 
             const formData = new FormData(form);
+            const nama = formData.get('nama');
+            const alamat = formData.get('Alamat');
+            const danaUsaha = formData.get('dana-usaha');
+            const sumberInformasi = formData.get('sumber-informasi');
+            const kendala = formData.get('Kendala');
+            const keinginan = formData.get('Keinginan');
 
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
@@ -415,10 +429,15 @@
                 });
 
                 const waMessage = encodeURIComponent(
-                    `Halo admin, saya ${formData.get('nama')} ingin membuka usaha dengan dana ${danaUsahaInput.value}.`
+                    `Halo kak admin, saya ${nama} dari ${alamat}.\n\n` +
+                    `Saya tertarik untuk membuka usaha dengan budget ${danaUsaha}.\n` +
+                    `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
+                    `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
+                    `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
 
-                window.location.href = `https://wa.me/6281234567890?text=${waMessage}`;
+                const waLink = `https://wa.me/6281234567890?text=${waMessage}`;
+                window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
                 alert('Pengiriman gagal. Silakan coba lagi.');
