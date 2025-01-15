@@ -327,7 +327,7 @@
                         <input type="number" id="Usia" name="Usia" required min="0" max="120" placeholder="Masukkan Usia Anda" data-tahun="Tahun">
                     </div>
                     <div class="form-input">
-                        <label for="Opening">Rencana Opening ( Tanggal rencana Opening tanggal dan bulan )</label>
+                        <label for="Opening">Rencana Opening</label>
                         <input type="text" id="Opening" name="Opening" required placeholder="Masukkan Rencana Opening">
                     </div>
 
@@ -351,17 +351,11 @@
                     </div>
 
                     <div class="form-input">
-                        <label>Dana Untuk Buka Usaha ( Paket termurah kami di harga 2 jutaan )</label>
+                        <label>Dana Untuk Buka Usaha</label>
                         <div class="dana-options">
-                            <div class="dana-option" data-value="2.000.000-5.000.000">
-                                Rp 2.000.000 - Rp 5.000.000
-                            </div>
-                            <div class="dana-option" data-value="6.000.000-8.000.000">
-                                Rp 6.000.000 - Rp 8.000.000
-                            </div>
-                            <div class="dana-option" data-value="9.000.000-15.000.000">
-                                Rp 9.000.000 - Rp 15.000.000
-                            </div>
+                            <div class="dana-option" data-value="2.000.000-5.000.000">Rp 2.000.000 - Rp 5.000.000</div>
+                            <div class="dana-option" data-value="6.000.000-8.000.000">Rp 6.000.000 - Rp 8.000.000</div>
+                            <div class="dana-option" data-value="9.000.000-15.000.000">Rp 9.000.000 - Rp 15.000.000</div>
                         </div>
                         <input type="hidden" id="dana-usaha" name="dana-usaha" required>
                     </div>
@@ -396,24 +390,17 @@
     </div>
 
     <script>
-        // Event listener untuk pilihan dana
         const danaOptions = document.querySelectorAll('.dana-option');
         const danaUsahaInput = document.getElementById('dana-usaha');
 
         danaOptions.forEach(option => {
             option.addEventListener('click', function () {
-                // Menghapus kelas 'selected' dari semua opsi
                 danaOptions.forEach(opt => opt.classList.remove('selected'));
-
-                // Menambahkan kelas 'selected' pada opsi yang dipilih
                 this.classList.add('selected');
-
-                // Menetapkan nilai dana usaha yang dipilih ke input hidden
                 danaUsahaInput.value = this.getAttribute('data-value');
             });
         });
 
-        // Event submit form
         const form = document.getElementById('partnership-form');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -422,13 +409,33 @@
                 return;
             }
 
-            // Melakukan pengiriman data form dengan validasi
             const formData = new FormData(form);
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec', { method: 'POST', body: formData });
+            const nama = formData.get('nama');
+            const alamat = formData.get('Alamat');
+            const namaUsaha = formData.get('Nama Usaha');
+            const danaUsaha = formData.get('dana-usaha');
+            const kendala = formData.get('Kendala');
+            const keinginan = formData.get('Keinginan');
+            const sumberInformasi = formData.get('sumber-informasi');
+            const lokasiUsaha = formData.get('lokasi-usaha');
+            const alamatUsaha = formData.get('alamat-usaha') || 'Tidak disebutkan';
+
+            const waMessage = encodeURIComponent(
+                `Halo kak admin, saya ${nama} dari ${alamat}.\n\n` +
+                `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${danaUsaha}.\n` +
+                `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
+                `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
+                `\n\nLokasi usaha: ${lokasiUsaha}, Alamat Lokasi: ${alamatUsaha}\n\n` +
+                `Saya mendapatkan informasi dari: ${sumberInformasi}`
+            );
+
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec', {
+                method: 'POST',
+                body: formData
+            });
 
             if (response.ok) {
-                // Pengalihan ke WhatsApp setelah pengiriman berhasil
-                const waLink = `https://wa.me/6282124952606?text=Form%20Kemitraan%20Chick%20Ichik%20Telah%20Dikirim`;
+                const waLink = `https://wa.me/6282124952606?text=${waMessage}`;
                 window.location.href = waLink;
             } else {
                 alert('Terjadi kesalahan saat pengiriman data!');
