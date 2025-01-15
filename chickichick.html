@@ -462,6 +462,15 @@
                 );
 
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
+
+                // Send admin data to Google Sheets
+                formData.append('adminName', admin.name);
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // Redirect to WhatsApp
                 window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
