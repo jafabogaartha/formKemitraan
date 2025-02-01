@@ -402,6 +402,10 @@
             {
                 number: '6281212125422',
                 name: 'Admin Reka',
+            },
+            {
+                number: '6281212126722',
+                name: 'Admin Berlian',
             }
         ];
     
@@ -426,7 +430,14 @@
         // Get admin based on the current second
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-            return currentSecond <= 30 ? adminDetails[1] : adminDetails[0];
+            
+            if (currentSecond >= 1 && currentSecond <= 20) {
+                return adminDetails[0]; // Admin Livia (detik 1-20)
+            } else if (currentSecond >= 21 && currentSecond <= 40) {
+                return adminDetails[1]; // Admin Reka (detik 21-40)
+            } else {
+                return adminDetails[2]; // Admin Berlian (detik 41-60)
+            }
         }
     
         // Submit form
