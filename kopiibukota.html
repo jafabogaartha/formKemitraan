@@ -102,34 +102,6 @@
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
-        .dana-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .dana-option {
-            border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius);
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .dana-option:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .dana-option.selected {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -173,9 +145,6 @@
                 font-size: 1.6rem;
             }
 
-            .dana-options {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* Animasi Tambahan */
@@ -350,15 +319,8 @@
                         placeholder="Masukkan nama usaha">
                 </div>
                 <div class="form-input">
-                    <div class="form-input">
-                        <label>Dana Untuk Buka Usaha</label>
-                        <div class="dana-options">
-                            <div class="dana-option" data-value="16.500.000">Rp 16.500.000</div>
-                        </div>
-                        <input type="hidden" id="dana-usaha" name="dana-usaha" required>
-                    </div>
-
-                    <input type="hidden" id="dana-usaha" name="dana-usaha" required>
+                    <label for="dana-usaha">Dana Untuk Buka Usaha</label>
+                    <input type="text" id="dana-usaha" name="dana-usaha" placeholder="Masukkan dana usaha" required>
                 </div>
                 <div class="form-input">
                     <label for="sumber-informasi">Sumber Informasi</label>
@@ -391,12 +353,10 @@
 
     <script>
         const form = document.getElementById('partnership-form');
-        const danaOptions = document.querySelectorAll('.dana-option');
-        const danaUsahaInput = document.getElementById('dana-usaha');
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
-    
+
         const adminDetails = [
             {
                 number: '6282124952606',
@@ -411,16 +371,27 @@
                 name: 'Admin Berlian',
             }
         ];
-    
-        // Dana option selection
-        danaOptions.forEach(option => {
-            option.addEventListener('click', function () {
-                danaOptions.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                danaUsahaInput.value = this.dataset.value;
+
+        function formatRupiah(angka) {
+            const numberFormat = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
             });
+
+            return numberFormat.format(angka);
+        }
+
+        const danaUsahaInput = document.getElementById('dana-usaha');
+
+        danaUsahaInput.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
+
+            // Format ke Rupiah
+            this.value = formatRupiah(value);
         });
-    
+
         // Lokasi usaha toggle
         lokasiUsahaSelect.addEventListener('change', () => {
             if (lokasiUsahaSelect.value === 'Sudah') {
@@ -429,11 +400,11 @@
                 additionalAddressDiv.style.display = 'none';
             }
         });
-    
+
         // Get admin based on the current second
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-            
+
             if (currentSecond >= 1 && currentSecond <= 20) {
                 return adminDetails[0]; // Admin Livia (detik 1-20)
             } else if (currentSecond >= 21 && currentSecond <= 40) {
@@ -442,60 +413,64 @@
                 return adminDetails[2]; // Admin Berlian (detik 41-60)
             }
         }
-    
+
         // Submit form
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-    
+
             const submitButton = document.querySelector('.submit-btn');
             if (submitButton.disabled) {
                 return; // Cegah pengiriman ulang jika tombol sudah disabled
             }
             submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
             submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
-    
+
+
             if (!danaUsahaInput.value) {
-                alert('Silakan pilih nominal dana usaha');
+                alert('Silakan masukkan nominal dana usaha');
                 submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
                 submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
                 return;
             }
-    
+
+
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
-            const danaUsaha = formData.get('dana-usaha');
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
             const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
-    
+
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
-    
+
+            // Sebelum mengirim, hilangkan format Rupiah
+            formData.set('dana-usaha', parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10));
+
             try {
                 // Get the admin based on time
                 const admin = getAdminBasedOnTime();
-    
+
                 // Send data to Google Sheets including admin
                 formData.append('admin', admin.name);
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
                 });
-    
+
                 // Create WhatsApp message
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
-                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${danaUsaha}.\n` +
+                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10))}.\n` +
                     `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
-    
+
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
-    
+
                 // Redirect to WhatsApp
                 window.location.href = waLink;
             } catch (error) {
@@ -506,7 +481,7 @@
             }
         });
     </script>
-    
+
 </body>
 
 </html>
