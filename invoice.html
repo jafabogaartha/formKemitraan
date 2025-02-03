@@ -103,6 +103,10 @@ select:focus {
 textarea {
   min-height: 100px;
   resize: vertical;
+   white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow-y: hidden;
+    resize: none;
 }
 
 select {
@@ -327,7 +331,7 @@ button.loading::before {
 
       <div class="form-input">
         <label for="paket">Paket Usaha:</label>
-        <select id="paket" name="nama-paket" required>
+        <select id="paket" name="nama-paket" required disabled>
           <option value="">--Pilih Paket--</option>
                     <!--You Need Mie-->
           <option data-franchise="You Need Mie" value="You Need Mie Hemat">Paket Hemat</option>
@@ -503,24 +507,38 @@ button.loading::before {
     </form>
   </div>
   </div>
-
   <script>
-
-    function showPaket() {
-      var selectedFranchise = document.getElementById("franchise").value;
-      var paketElements = document.querySelectorAll("[data-franchise]");
-
-      for (var i = 0; i < paketElements.length; i++) {
-        var paketElement = paketElements[i];
-
-        if (paketElement.getAttribute("data-franchise") === selectedFranchise) {
-          paketElement.style.display = "block";
-        } else {
-          paketElement.style.display = "none";
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && event.target.tagName === 'TEXTAREA') {
+            event.preventDefault();
         }
+    });
+    function showPaket() {
+        var selectedFranchise = document.getElementById("franchise").value;
+        var paketSelect = document.getElementById("paket");
+
+        // Reset paket select
+        paketSelect.value = "";
+        paketSelect.disabled = !selectedFranchise;
+        
+        // Hide all paket options initially
+        var allPaketOptions = paketSelect.querySelectorAll('option[data-franchise]');
+        allPaketOptions.forEach(option => {
+            option.style.display = 'none';
+        });
+        
+      
+       
+      if (selectedFranchise) {
+        var paketElements = paketSelect.querySelectorAll('[data-franchise="' + selectedFranchise + '"]');
+
+        paketElements.forEach(option => {
+            option.style.display = "block";
+        });
+
       }
-    }
-  </script>
+   }
+</script>
 
 
   <script>
