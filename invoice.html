@@ -15,257 +15,257 @@
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: #f6f5ff;
-  min-height: 100vh;
-}
-
-.form-container {
-  width: 100%;
-  background: white;
-}
-
-h1 {
-  font-size: 28px;
-  text-align: center;
-  padding: 25px 0;
-  color: #4C1D95;
-  background: linear-gradient(to right, #8B5CF6, #6D28D9);
-  color: white;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h1 span {
-  display: block;
-  font-size: 22px;
-  margin-top: 8px;
-  font-weight: 400;
-}
-
-form {
-  padding: 0 20px 20px;
-}
-
-.form-input {
-  margin-bottom: 20px;
-  position: relative;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #4C1D95;
-  font-size: 14px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-label::before {
-  content: "";
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  background: #8B5CF6;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-
-input, 
-textarea, 
-select {
-  width: 100%;
-  padding: 14px;
-  border: 2px solid #E5E7EB;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #374151;
-  background: white;
-  transition: all 0.2s ease;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: #8B5CF6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-   white-space: pre-wrap;
-    overflow-wrap: break-word;
-    overflow-y: hidden;
-    resize: none;
-}
-
-select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234C1D95'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
-}
-
-select:disabled {
-  background-color: #F3F4F6;
-  cursor: not-allowed;
-  color: #9CA3AF;
-  border-color: #E5E7EB;
-}
-
-button {
-  width: 100%;
-  background: linear-gradient(to right, #8B5CF6, #6D28D9);
-  color: white;
-  padding: 16px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin: 24px 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
-}
-
-button::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transform: rotate(45deg);
-  animation: buttonShine 3s infinite;
-}
-
-@keyframes buttonShine {
-  from {
-    transform: translateX(-100%) rotate(45deg);
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
   }
-  to {
-    transform: translateX(100%) rotate(45deg);
+
+  body {
+    background: #f6f5ff;
+    min-height: 100vh;
   }
-}
 
-p {
-  margin: 0 !important;
-  background: linear-gradient(to right, #DC2626, #B91C1C) !important;
-  color: white !important;
-  text-align: center !important;
-  padding: 16px !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-}
-
-.input-group {
-  position: relative;
-}
-
-.input-group input {
-  padding-right: 40px;
-}
-
-.input-group-text {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #4C1D95;
-}
-
-.flatpickr-calendar {
-  border: none !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-}
-
-.flatpickr-day.selected {
-  background: #8B5CF6 !important;
-  border-color: #8B5CF6 !important;
-}
-
-/* Form validation styles */
-input:invalid,
-textarea:invalid,
-select:invalid {
-  border-color: #DC2626;
-}
-
-.form-input.success input,
-.form-input.success textarea,
-.form-input.success select {
-  border-color: #059669;
-}
-
-/* Loading state */
-button.loading {
-  position: relative;
-  color: transparent;
-}
-
-button.loading::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20px;
-  height: 20px;
-  border: 2px solid white;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (min-width: 768px) {
   .form-container {
-    max-width: 550px;
-    margin: 30px auto;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    width: 100%;
+    background: white;
+  }
+
+  h1 {
+    font-size: 28px;
+    text-align: center;
+    padding: 25px 0;
+    color: #4C1D95;
+    background: linear-gradient(to right, #8B5CF6, #6D28D9);
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 span {
+    display: block;
+    font-size: 22px;
+    margin-top: 8px;
+    font-weight: 400;
   }
 
   form {
-    padding: 0 30px 30px;
+    padding: 0 20px 20px;
+  }
+
+  .form-input {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4C1D95;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+
+  label::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: #8B5CF6;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #374151;
+    background: white;
+    transition: all 0.2s ease;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow-y: hidden;
+    resize: none;
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234C1D95'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+
+  select:disabled {
+    background-color: #F3F4F6;
+    cursor: not-allowed;
+    color: #9CA3AF;
+    border-color: #E5E7EB;
+  }
+
+  button {
+    width: 100%;
+    background: linear-gradient(to right, #8B5CF6, #6D28D9);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 24px 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+  }
+
+  button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent);
+    transform: rotate(45deg);
+    animation: buttonShine 3s infinite;
+  }
+
+  @keyframes buttonShine {
+    from {
+      transform: translateX(-100%) rotate(45deg);
+    }
+
+    to {
+      transform: translateX(100%) rotate(45deg);
+    }
   }
 
   p {
-    max-width: 550px;
-    margin: 20px auto !important;
-    border-radius: 8px;
+    margin: 0 !important;
+    background: linear-gradient(to right, #DC2626, #B91C1C) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 16px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
   }
-}
+
+  .input-group {
+    position: relative;
+  }
+
+  .input-group input {
+    padding-right: 40px;
+  }
+
+  .input-group-text {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4C1D95;
+  }
+
+  .flatpickr-calendar {
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .flatpickr-day.selected {
+    background: #8B5CF6 !important;
+    border-color: #8B5CF6 !important;
+  }
+
+  /* Form validation styles */
+  input:invalid,
+  textarea:invalid,
+  select:invalid {
+    border-color: #DC2626;
+  }
+
+  .form-input.success input,
+  .form-input.success textarea,
+  .form-input.success select {
+    border-color: #059669;
+  }
+
+  /* Loading state */
+  button.loading {
+    position: relative;
+    color: transparent;
+  }
+
+  button.loading::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .form-container {
+      max-width: 550px;
+      margin: 30px auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    form {
+      padding: 0 30px 30px;
+    }
+
+    p {
+      max-width: 550px;
+      margin: 20px auto !important;
+      border-radius: 8px;
+    }
+  }
 </style>
+
 <body>
   <div class="form-container">
     <h1>Kemitraan <br><span>Jafa Boga Artha</span></h1>
@@ -294,10 +294,11 @@ button.loading::before {
       </div>
       <div class="form-input">
         <label for="no-hp">Nomor Handphone:</label>
-        <input type="text" id="no-hp" name="no-hp" pattern="[0-9]{10,12}|[0-9]{13}|[0-9]{14}" required placeholder="Contoh: 081234567890">
+        <input type="text" id="no-hp" name="no-hp" pattern="[0-9]{10,12}|[0-9]{13}|[0-9]{14}" required
+          placeholder="Contoh: 081234567890">
       </div>
-      
-      
+
+
       <div class="form-input">
         <label for="email">Alamat Email:</label>
         <input type="text" id="email" name="email" placeholder="opsionalemail@mail.com">
@@ -308,11 +309,12 @@ button.loading::before {
           <option value="">--Pilih Franchise--</option>
           <option value="You Need Mie">You Need Mie</option>
           <option value="Mentoast">Mentoast</option>
+          <option value="Kentang Gantenk">Kentang Gantenk</option>
+          <option value="Kopi Ibukota">Kopi Ibukota</option>
           <option value="My Bestea">My Bestea</option>
           <option value="Raja Steak">Raja Steak</option>
           <option value="Esteh Ibukota">Esteh Ibukota</option>
           <option value="Seblak Express">Seblak Express</option>
-          <option value="Kentang Gantenk">Kentang Gantenk</option>
           <option value="Chick Ichick">Chick Ichick</option>
           <option value="Chacarica">Charicha</option>
           <option value="Tahu Nyonyor">Tahu Nyonyor</option>
@@ -333,13 +335,13 @@ button.loading::before {
         <label for="paket">Paket Usaha:</label>
         <select id="paket" name="nama-paket" required disabled>
           <option value="">--Pilih Paket--</option>
-                    <!--You Need Mie-->
+          <!--You Need Mie-->
           <option data-franchise="You Need Mie" value="You Need Mie Hemat">Paket Hemat</option>
           <option data-franchise="You Need Mie" value="You Need Mie Portable">Paket Portable</option>
           <option data-franchise="You Need Mie" value="You Need Mie Reguler">Paket Reguler</option>
           <option data-franchise="You Need Mie" value="You Need Mie Platinum">Paket Platinum</option>
           <option data-franchise="You Need Mie" value="You Need Mie Kontainer">Paket Kontainer</option>
-                    <!--Mentoast-->
+          <!--Mentoast-->
           <option data-franchise="Mentoast" value="Mentoast Super Hemat">Paket Super Hemat</option>
           <option data-franchise="Mentoast" value="Mentoast Hemat">Paket Hemat</option>
           <option data-franchise="Mentoast" value="Mentoast Portable">Paket Portable</option>
@@ -347,7 +349,10 @@ button.loading::before {
           <option data-franchise="Mentoast" value="Mentoast Platinum">Paket Platinum</option>
           <option data-franchise="Mentoast" value="Mentoast Kontainer">Paket Kontainer</option>
 
-                    <!--Mybestea-->
+          <!--Kopiibukota-->
+          <option data-franchise="Kopi Ibukota" value="Kopi Ibukota Sepeda Listrik">Paket Sepeda Listrik</option>
+
+          <!--Mybestea-->
           <option data-franchise="My Bestea" value="Mybestea Super Hemat">Paket Super Hemat</option>
           <option data-franchise="My Bestea" value="Mybestea Hemat">Paket Hemat</option>
           <option data-franchise="My Bestea" value="Mybestea Portable">Paket Portable</option>
@@ -368,7 +373,7 @@ button.loading::before {
           <option data-franchise="Esteh Ibukota" value="Esteh Ibukota Reguler">Paket Reguler</option>
           <option data-franchise="Esteh Ibukota" value="Esteh Ibukota Platinum">Paket Platinum</option>
           <option data-franchise="Esteh Ibukota" value="Esteh Ibukota Kontainer">Paket Kontainer</option>
-          
+
           <!--Seblak Express-->
           <option data-franchise="Seblak Express" value="Seblak Express Paket Super Hemat">Paket Super Hemat</option>
           <option data-franchise="Seblak Express" value="Seblak Express Paket Hemat">Paket Hemat</option>
@@ -385,14 +390,14 @@ button.loading::before {
           <option data-franchise="Kentang Gantenk" value="Kentang Gantenk Platinum">Paket Platinum</option>
           <option data-franchise="Kentang Gantenk" value="Kentang Gantenk Kontainer">Paket Kontainer</option>
 
-           <!--Chick Ichik-->
+          <!--Chick Ichik-->
           <option data-franchise="Chick Ichick" value="Chick Ichik Super Hemat">Paket Super Hemat</option>
           <option data-franchise="Chick Ichick" value="Chick Ichik Hemat">Paket Hemat</option>
           <option data-franchise="Chick Ichick" value="Chick Ichik Portable">Paket Portable</option>
           <option data-franchise="Chick Ichick" value="Chick Ichik Reguler">Paket Reguler</option>
           <option data-franchise="Chick Ichick" value="Chick Ichik Platinum">Paket Platinum</option>
           <option data-franchise="Chick Ichick" value="Chick Ichik Kontainer">Paket Kontainer</option>
-          
+
           <!--Chacharica-->
           <option data-franchise="Chacarica" value="Chacarica Paket Superhemat">Paket Super Hemat</option>
           <option data-franchise="Chacarica" value="Chacarica paket Hemat">Paket Hemat</option>
@@ -423,7 +428,8 @@ button.loading::before {
           <option data-franchise="Chickuruyuk" value="Chickuruyuk Kontainer">Paket Kontainer</option>
           <!--Republik Coklat-->
           <option data-franchise="Republik Coklat" value="Republik Coklat Booth">Paket Booth</option>
-          <option data-franchise="Republik Coklat" value="Republik Coklat Booth dan Mesin">Paket Booth dan Mesin</option>
+          <option data-franchise="Republik Coklat" value="Republik Coklat Booth dan Mesin">Paket Booth dan Mesin
+          </option>
           <!--Nice Cofee-->
           <option data-franchise="Nice Coffe" value="Nice Coffee Super Hemat">Paket Super Hemat</option>
           <option data-franchise="Nice Coffe" value="Nice coffee Hemat">Paket Hemat</option>
@@ -446,10 +452,10 @@ button.loading::before {
           <option data-franchise="Mizterpi" value="Mizterpi paket Platinum">Paket Platinum</option>
           <option data-franchise="Mizterpi" value="Mizterpi paket kontainer">Paket Kontainer</option>
 
-           <!--Overthink Drink -->
-           <option data-franchise="Overthink Drink" value="Overthink Drink paket Juragan">Paket Juragan</option>
-           <option data-franchise="Overthink Drink" value="Overthink Drink paket Sultan">Paket Sultan</option>
-           <!--Chocopedia-->
+          <!--Overthink Drink -->
+          <option data-franchise="Overthink Drink" value="Overthink Drink paket Juragan">Paket Juragan</option>
+          <option data-franchise="Overthink Drink" value="Overthink Drink paket Sultan">Paket Sultan</option>
+          <!--Chocopedia-->
           <option data-franchise="Chocopedia" value="Chocopedia paket Superhemat">Paket Super Hemat</option>
           <option data-franchise="Chocopedia" value="Chocopedia paket Hemat">Paket Hemat</option>
           <option data-franchise="Chocopedia" value="Chocopedia paket Portable">Paket Portable</option>
@@ -508,37 +514,37 @@ button.loading::before {
   </div>
   </div>
   <script>
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && event.target.tagName === 'TEXTAREA') {
-            event.preventDefault();
-        }
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' && event.target.tagName === 'TEXTAREA') {
+        event.preventDefault();
+      }
     });
     function showPaket() {
-        var selectedFranchise = document.getElementById("franchise").value;
-        var paketSelect = document.getElementById("paket");
+      var selectedFranchise = document.getElementById("franchise").value;
+      var paketSelect = document.getElementById("paket");
 
-        // Reset paket select
-        paketSelect.value = "";
-        paketSelect.disabled = !selectedFranchise;
-        
-        // Hide all paket options initially
-        var allPaketOptions = paketSelect.querySelectorAll('option[data-franchise]');
-        allPaketOptions.forEach(option => {
-            option.style.display = 'none';
-        });
-        
-      
-       
+      // Reset paket select
+      paketSelect.value = "";
+      paketSelect.disabled = !selectedFranchise;
+
+      // Hide all paket options initially
+      var allPaketOptions = paketSelect.querySelectorAll('option[data-franchise]');
+      allPaketOptions.forEach(option => {
+        option.style.display = 'none';
+      });
+
+
+
       if (selectedFranchise) {
         var paketElements = paketSelect.querySelectorAll('[data-franchise="' + selectedFranchise + '"]');
 
         paketElements.forEach(option => {
-            option.style.display = "block";
+          option.style.display = "block";
         });
 
       }
-   }
-</script>
+    }
+  </script>
 
 
   <script>
