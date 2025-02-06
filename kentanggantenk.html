@@ -102,34 +102,6 @@
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
-        .dana-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .dana-option {
-            border: 2px solid var(--primary-color);
-            border-radius: var(--border-radius);
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .dana-option:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .dana-option.selected {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -173,9 +145,6 @@
                 font-size: 1.6rem;
             }
 
-            .dana-options {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* Animasi Tambahan */
@@ -253,17 +222,6 @@
             background-color: rgba(52, 152, 219, 0.1);
             border-radius: var(--border-radius);
             display: inline-block;
-        }
-
-        .ongkir-message {
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            border: 2px dashed red;
-            animation: fadeIn 0.8s ease;
-            color: red;
-            background: rgba(255, 0, 0, 0.1)
         }
 
         /* Animation for new sections */
@@ -361,18 +319,8 @@
                         placeholder="Masukkan nama usaha">
                 </div>
                 <div class="form-input">
-                    <label for="paket-usaha">Pilih Paket Usaha</label>
-                    <select id="paket-usaha" name="paket-usaha" required>
-                        <option value="" selected disabled>Pilih Paket</option>
-                        <option value="Kentang Gantenk Paket Super Hemat">Kentang Gantenk Paket Super Hemat</option>
-                        <option value="Kentang Gantenk Paket Hemat">Kentang Gantenk Paket Hemat</option>
-                        <option value="Kentang Gantenk Paket Portable">Kentang Gantenk Paket Portable</option>
-                        <option value="Kentang Gantenk Paket Reguler">Kentang Gantenk Paket Reguler</option>
-                        <option value="Kentang Gantenk Paket Platinum">Kentang Gantenk Paket Platinum</option>
-                        <option value="Kentang Gantenk Paket Kontainer">Kentang Gantenk Paket Kontainer</option>
-                    </select>
-                    <p id="ongkir-info" class="ongkir-message" style="display: none;"></p>
-                    <input type="hidden" id="dana-usaha" name="dana-usaha" required>
+                    <label for="dana-usaha">Dana Untuk Buka Usaha</label>
+                    <input type="text" id="dana-usaha" name="dana-usaha" placeholder="Masukkan dana usaha" required>
                 </div>
                 <div class="form-input">
                     <label for="sumber-informasi">Sumber Informasi</label>
@@ -405,9 +353,6 @@
 
     <script>
         const form = document.getElementById('partnership-form');
-        const paketUsahaSelect = document.getElementById('paket-usaha');
-        const danaUsahaInput = document.getElementById('dana-usaha');
-        const ongkirInfo = document.getElementById('ongkir-info');
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
@@ -427,37 +372,24 @@
             }
         ];
 
-        const paketPrices = {
-            "Kentang Gantenk Paket Super Hemat": 2880000,
-            "Kentang Gantenk Paket Hemat": 4100000,
-            "Kentang Gantenk Paket Portable": 5250000,
-            "Kentang Gantenk Paket Reguler": 7490000,
-            "Kentang Gantenk Paket Platinum": 8750000,
-            "Kentang Gantenk Paket Kontainer": 14550000,
-        };
-
         function formatRupiah(angka) {
             const numberFormat = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
-                minimumFractionDigits: 2, // Menambahkan koma dan 2 angka desimal
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
             });
-            return numberFormat.format(angka).replace(/\,00$/, ''); // Menghilangkan ,00 jika ada
+
+            return numberFormat.format(angka);
         }
 
-        // Event listener for paket-usaha dropdown change
-        paketUsahaSelect.addEventListener('change', function () {
-            const selectedValue = this.value;
-            if (selectedValue) {
-                const price = paketPrices[selectedValue];
-                const formattedPrice = formatRupiah(price);
-                danaUsahaInput.value = formattedPrice;
-                ongkirInfo.textContent = `Harga ${selectedValue} senilai ${formattedPrice} dan belum termasuk Ongkir`;
-                ongkirInfo.style.display = 'block';
-            } else {
-                danaUsahaInput.value = '';
-                ongkirInfo.style.display = 'none';
-            }
+        const danaUsahaInput = document.getElementById('dana-usaha');
+
+        danaUsahaInput.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
+
+            // Format ke Rupiah
+            this.value = formatRupiah(value);
         });
 
         // Lokasi usaha toggle
@@ -493,17 +425,18 @@
             submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
             submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
 
+
             if (!danaUsahaInput.value) {
-                alert('Silakan pilih paket usaha');
+                alert('Silakan masukkan nominal dana usaha');
                 submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
                 submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
                 return;
             }
 
+
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
-            const selectedPaket = paketUsahaSelect.value; // Get the full text of the selected package
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
@@ -512,6 +445,9 @@
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
+
+            // Sebelum mengirim, hilangkan format Rupiah
+            formData.set('dana-usaha', parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10));
 
             try {
                 // Get the admin based on time
@@ -527,7 +463,7 @@
                 // Create WhatsApp message
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
-                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan paket ${selectedPaket}.\n` + // Use selectedPaket
+                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10))}.\n` +
                     `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
@@ -545,6 +481,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>
