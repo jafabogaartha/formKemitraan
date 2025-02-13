@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Referral CV Maha Niaga Artha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #FFF5E4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            min-height: 100vh;
+            background: #ffffff;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+                min-height: auto;
+                margin: 2rem;
+                border-radius: 24px;
+                border: 3px solid #000000;
+                box-shadow: 8px 8px 0px #000000;
+            }
+        }
+
+        .decoration {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: #FFD93D;
+            border: 3px solid #000000;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            top: -60px;
+            right: -60px;
+        }
+
+        .decoration-2 {
+            bottom: -60px;
+            left: -60px;
+            background: #FF8FB1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            position: relative;
+            text-align: center;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000000;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 4px 4px 0px #000000;
+            transform: translate(-4px, -4px);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #FFD93D;
+            color: #000000;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        button:hover {
+            background-color: #000000;
+            color: #FFD93D;
+            box-shadow: 6px 6px 0px #FFD93D;
+            transform: translate(-6px, -6px);
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: #ffffff;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #000000;
+            color: #25D366;
+            box-shadow: 6px 6px 0px #25D366;
+        }
+
+        #kodeReferral {
+            background-color: #FFF5E4;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .result-container {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        #imageContainer {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        #referralImage {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 16px;
+            border: 3px solid #000000;
+            box-shadow: 8px 8px 0px #000000;
+            transition: all 0.3s ease;
+        }
+
+        #referralImage:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px #000000;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .button-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .success-message {
+            background: #DCFCE7;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 4px 4px 0px #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        
+        <h1>Program Referral<br>CV Maha Niaga Artha</h1>
+        <p class="subtitle">Mari bergabung dan raih kesuksesan bersama kami! ✨</p>
+        
+        <form id="referralForm">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap Anda">
+            </div>
+            <div class="form-group">
+                <label for="nomorHp">Nomor WhatsApp</label>
+                <input type="tel" id="nomorHp" name="nomorHp" required placeholder="Contoh: 08123456789">
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat Lengkap</label>
+                <input type="text" id="alamat" name="alamat" required placeholder="Masukkan alamat lengkap Anda">
+            </div>
+            <div class="form-group">
+                <label for="kodeReferral">Kode Referral Anda</label>
+                <input type="text" id="kodeReferral" name="kodeReferral" readonly>
+            </div>
+            <button type="submit">Daftar Sekarang</button>
+        </form>
+
+        <div class="result-container" id="resultContainer">
+            <div class="success-message">
+                Selamat! Pendaftaran Anda berhasil. Bagikan kode referral Anda untuk mendapatkan bonus! 🎉
+            </div>
+            <div id="imageContainer">
+                <canvas id="referralCanvas" style="display: none;"></canvas>
+                <img id="referralImage" alt="Kode Referral">
+            </div>
+            <div class="button-container">
+                <button id="downloadBtn">Download Gambar</button>
+                <button id="whatsappBtn" class="whatsapp-btn">Bagikan ke WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('referralForm');
+        const namaInput = document.getElementById('nama');
+        const nomorHpInput = document.getElementById('nomorHp');
+        const kodeReferralInput = document.getElementById('kodeReferral');
+        const resultContainer = document.getElementById('resultContainer');
+        const imageContainer = document.getElementById('imageContainer');
+        const referralImage = document.getElementById('referralImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const canvas = document.getElementById('referralCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function generateKodeReferral() {
+            const nama = namaInput.value.trim();
+            const nomorHp = nomorHpInput.value.trim();
+            
+            if (nama && nomorHp.length >= 2) {
+                const namaBagian = nama.split(' ')[0].toUpperCase();
+                const nomorHpBagian = nomorHp.slice(-2);
+                return `${namaBagian}${nomorHpBagian}`;
+            }
+            return '';
+        }
+
+        function generateReferralImage(kodeReferral) {
+            return new Promise((resolve) => {
+                canvas.width = 1200;
+                canvas.height = 630;
+
+                // Background
+                ctx.fillStyle = '#FFF5E4';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Decorative elements
+                const colors = ['#FFD93D', '#FF8FB1', '#25D366'];
+                for (let i = 0; i < 8; i++) {
+                    ctx.fillStyle = colors[i % colors.length];
+                    ctx.beginPath();
+                    ctx.arc(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height,
+                        30 + Math.random() * 40,
+                        0,
+                        Math.PI * 2
+                    );
+                    ctx.fill();
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 4;
+                    ctx.stroke();
+                }
+
+                // Main content container
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(100, 80, canvas.width - 200, canvas.height - 160);
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 8;
+                ctx.strokeRect(100, 80, canvas.width - 200, canvas.height - 160);
+
+                // Add text
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'center';
+                
+                // Title
+                ctx.font = 'bold 72px Plus Jakarta Sans';
+                ctx.fillText('✨ Jadi Mitra Sukses ✨', canvas.width/2, 180);
+                
+                // Company name
+                ctx.font = 'bold 56px Plus Jakarta Sans';
+                ctx.fillText('CV Maha Niaga Artha', canvas.width/2, 260);
+
+                // Referral code container
+                const codeBoxWidth = 600;
+                const codeBoxHeight = 120;
+                const codeBoxX = (canvas.width - codeBoxWidth) / 2;
+                const codeBoxY = 320;
+
+                // Draw referral code box
+                ctx.fillStyle = '#FFD93D';
+                ctx.fillRect(codeBoxX, codeBoxY, codeBoxWidth, codeBoxHeight);
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 6;
+                ctx.strokeRect(codeBoxX, codeBoxY, codeBoxWidth, codeBoxHeight);
+
+                // Add referral code
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 80px Plus Jakarta Sans';
+                ctx.fillText(kodeReferral, canvas.width/2, codeBoxY + 85);
+
+                // Add bottom text
+                ctx.font = '600 42px Plus Jakarta Sans';
+
+
+                const imageUrl = canvas.toDataURL('image/jpeg', 0.8);
+                referralImage.src = imageUrl;
+                referralImage.onload = () => resolve(imageUrl);
+            });
+        }
+
+        namaInput.addEventListener('input', () => {
+            kodeReferralInput.value = generateKodeReferral();
+        });
+
+        nomorHpInput.addEventListener('input', () => {
+            kodeReferralInput.value = generateKodeReferral();
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'kode-referral.jpg';
+            link.href = referralImage.src;
+            link.click();
+        });
+
+        whatsappBtn.addEventListener('click', () => {
+            const nama = namaInput.value;
+            const kodeReferral = kodeReferralInput.value;
+            const message = `✨ *Special Invitation: Join & Grow Together!* ✨\n\n`
+                + `Halo Sobat! 👋\n\n`
+                + `Saya ${nama} mengundang Anda untuk bergabung dalam kesuksesan bersama CV Maha Niaga Artha! 🌟\n\n`
+                + `*Kode Referral Eksklusif Anda:*\n${kodeReferral}\n\n`
+                + `🎯 *Keuntungan Menjadi Mitra:*\n`
+                + `💰 Potensi penghasilan menarik\n`
+                + `🤝 Support sistem terpadu\n`
+                + `📱 Aplikasi manajemen modern\n`
+                + `📚 Pelatihan bisnis berkala\n`
+                + `🎁 Bonus referral menarik\n\n`
+                + `Daftar sekarang di:\n`
+                + `🌐 paketkemitraan.biz.id/referral\n\n`
+                + `Jangan lewatkan kesempatan emas ini! 💫\n`
+                + `#SuksesBareng #BisnisImpian #PeluangEmas`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = {
+                nama: formData.get('nama'),
+                nomorHp: formData.get('nomorHp'),
+                alamat: formData.get('alamat'),
+                kodeReferral: formData.get('kodeReferral')
+            };
+
+            try {
+                await fetch('https://script.google.com/macros/s/AKfycbyRxPwltW5bc6aNmx_ySm2cPtYqis4_-c0j8iVmtDk9KiztCqcFljWBgiYE5qLF7L5chw/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Generate and show the referral image
+                await generateReferralImage(data.kodeReferral);
+                
+                // Show success state
+                resultContainer.style.display = 'block';
+                form.style.display = 'none';
+
+                // Scroll to the result container
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Maaf, terjadi kesalahan saat mengirim data. Silakan coba lagi dalam beberapa saat.');
+            }
+        });
+
+        // Format nomor HP
+        nomorHpInput.addEventListener('input', (e) => {
+            // Hapus semua karakter non-digit
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Pastikan nomor dimulai dengan '0' atau '62'
+            if (value.startsWith('62')) {
+                value = '0' + value.substring(2);
+            }
+            
+            // Update nilai input
+            e.target.value = value;
+        });
+
+        // Validasi form sebelum submit
+        form.addEventListener('submit', (e) => {
+            const nama = namaInput.value.trim();
+            const nomorHp = nomorHpInput.value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+
+            if (nama.length < 3) {
+                alert('Nama harus minimal 3 karakter');
+                e.preventDefault();
+                return;
+            }
+
+            if (nomorHp.length < 10 || nomorHp.length > 13) {
+                alert('Nomor HP tidak valid (10-13 digit)');
+                e.preventDefault();
+                return;
+            }
+
+            if (alamat.length < 10) {
+                alert('Alamat terlalu pendek, mohon masukkan alamat lengkap');
+                e.preventDefault();
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
