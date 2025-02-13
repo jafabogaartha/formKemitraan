@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* Gaya CSS seperti pada kode sebelumnya */
         * {
             margin: 0;
             padding: 0;
@@ -363,22 +364,37 @@
         whatsappBtn.addEventListener('click', () => {
             const nama = namaInput.value;
             const kodeReferral = kodeReferralInput.value;
-            const message = `✨ *Special Invitation: Join & Grow Together!* ✨\n\n`
-                + `Halo Sobat! 👋\n\n`
-                + `Saya ${nama} mengundang Anda untuk bergabung dalam kesuksesan bersama CV Maha Niaga Artha! 🌟\n\n`
-                + `*Kode Referral Eksklusif Anda:*\n${kodeReferral}\n\n`
-                + `🎯 *Keuntungan Menjadi Mitra:*\n`
-                + `💰 Potensi penghasilan menarik\n`
-                + `🤝 Support sistem terpadu\n`
-                + `📱 Aplikasi manajemen modern\n`
-                + `📚 Pelatihan bisnis berkala\n`
-                + `🎁 Bonus referral menarik\n\n`
-                + `Daftar sekarang di:\n`
-                + `🌐 paketkemitraan.biz.id/referral\n\n`
-                + `Jangan lewatkan kesempatan emas ini! 💫\n`
-                + `#SuksesBareng #BisnisImpian #PeluangEmas`;
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+
+            // Pastikan gambar sudah di-load sebelum membuat pesan
+            referralImage.onload = () => {
+                // Konversi gambar menjadi base64
+                const imageUrl = referralImage.src;
+
+                // Buat pesan dengan menyertakan URL gambar
+                const message = `✨ *Special Invitation: Join & Grow Together!* ✨\n\n`
+                    + `Halo Sobat! 👋\n\n`
+                    + `Saya ${nama} mengundang Anda untuk bergabung dalam kesuksesan bersama CV Maha Niaga Artha! 🌟\n\n`
+                    + `*Kode Referral Eksklusif Anda:*\n${kodeReferral}\n\n`
+                    + `🎯 *Keuntungan Menjadi Mitra:*\n`
+                    + `💰 Potensi penghasilan menarik\n`
+                    + `🤝 Support sistem terpadu\n`
+                    + `📱 Aplikasi manajemen modern\n`
+                    + `📚 Pelatihan bisnis berkala\n`
+                    + `🎁 Bonus referral menarik\n\n`
+                    + `Daftar sekarang di:\n`
+                    + `🌐 paketkemitraan.biz.id/referral\n\n`
+                    + `Jangan lewatkan kesempatan emas ini! 💫\n`
+                    + `#SuksesBareng #BisnisImpian #PeluangEmas\n\n`
+                    + `[Gambar Referral: ${imageUrl}]`; // Menyertakan URL gambar
+
+                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            };
+
+            // Panggil event load jika gambar sudah di-cache
+            if (referralImage.complete) {
+                referralImage.onload();
+            }
         });
 
         form.addEventListener('submit', async (e) => {
