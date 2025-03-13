@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemitraan Chick Ichik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            /* Warna gelap yang kuat */
+            --secondary-color: #ecf0f1;
+            /* Warna latar belakang ringan */
+            --accent-color: #3498db;
+            /* Warna aksen cerah */
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.05),
+                0 4px 15px rgba(0, 0, 0, 0.03);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .form-section {
+            padding: 40px 30px;
+        }
+
+        .form-section h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .form-section h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+
+        .form-input {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-input label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-input input,
+        .form-input select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: var(--secondary-color);
+        }
+
+        .form-input input:focus,
+        .form-input select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsivitas Full Width untuk Mobile */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                border-top: none;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
+
+            .form-section h1 {
+                font-size: 1.6rem;
+            }
+
+        }
+
+        /* Animasi Tambahan */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #additional-address {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeIn 0.8s ease;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(236, 240, 241, 0.3), transparent);
+            border-radius: var(--border-radius);
+        }
+
+        .welcome-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .welcome-section .hashtag {
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-top: 15px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 15px;
+            display: inline-block;
+            border: 2px solid var(--accent-color);
+            border-radius: var(--border-radius);
+            background-color: rgba(52, 152, 219, 0.1);
+            transform: rotate(-2deg);
+        }
+
+        /* New styles for consultation message section */
+        .consultation-message {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(to bottom, var(--secondary-color), white);
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--accent-color);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .consultation-message p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .consultation-message .highlight {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-top: 15px;
+            padding: 5px 10px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: var(--border-radius);
+            display: inline-block;
+        }
+
+        /* Animation for new sections */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments for new sections */
+        @media screen and (max-width: 600px) {
+            .welcome-section {
+                padding: 15px;
+                margin-bottom: 25px;
+            }
+
+            .welcome-section p {
+                font-size: 1rem;
+            }
+
+            .welcome-section .hashtag {
+                font-size: 1.1rem;
+                padding: 6px 12px;
+            }
+
+            .consultation-message {
+                padding: 15px;
+                margin: 20px 0;
+            }
+        }
+
+        /* Styled price alert */
+        .error-message {
+            display: none; /* Hidden by default */
+            margin-top: 10px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .price-alert {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: var(--border-radius);
+        }
+
+        .price-alert-icon {
+            color: #ff9800;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .price-alert-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-alert-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #f57c00;
+            margin-bottom: 4px;
+        }
+
+        .price-alert-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            .price-alert {
+                padding: 10px;
+            }
+            
+            .price-alert-icon {
+                margin-right: 8px;
+            }
+            
+            .price-alert-title {
+                font-size: 0.85rem;
+            }
+            
+            .price-alert-value {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h1>Form Kemitraan Chick Ichik</h1>
+            <div class="welcome-section">
+                <p>Hallo Calon Mitra.</p>
+                <p>Ini adalah form pendaftaran untuk gabung jadi mitra kami.</p>
+                <p>Kami siap bantu wujudkan bisnis untuk anda.</p>
+                <p>Yuuk Kita Usahakan Sukses Itu.!</p>
+                <p class="hashtag">#2025PunyaUsaha</p>
+            </div>
+            <form name="form-kontak" id="partnership-form">
+                <!-- Form elements -->
+                <div class="form-input">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap">
+                </div>
+                <div class="form-input">
+                    <label for="Alamat">Alamat</label>
+                    <input type="text" id="Alamat" name="Alamat" required placeholder="Masukkan Alamat">
+                </div>
+                <div class="form-input">
+                    <label for="pekerjaan">Pekerjaan</label>
+                    <input type="text" id="pekerjaan" name="pekerjaan" required placeholder="Masukkan pekerjaan">
+                </div>
+                <div class="form-input">
+                    <label for="Usia">Usia</label>
+                    <input type="number" id="Usia" name="Usia" required min="0" max="120"
+                        placeholder="Masukkan Usia Anda">
+                </div>
+                <div class="form-input">
+                    <label for="Opening">Rencana Opening</label>
+                    <input type="text" id="Opening" name="Opening" required placeholder="Masukkan Rencana Opening">
+                </div>
+                <div class="form-input">
+                    <label for="no-hp">Nomor Handphone</label>
+                    <input type="tel" id="no-hp" name="no-hp" pattern="[0-9]{10,14}" required
+                        placeholder="Contoh: 081234567890">
+                </div>
+                <div class="form-input">
+                    <label for="lokasi-usaha">Lokasi Usaha</label>
+                    <select id="lokasi-usaha" name="lokasi-usaha" required>
+                        <option value="" selected disabled>Pilih Status Lokasi</option>
+                        <option value="Belum">Belum Punya Lokasi</option>
+                        <option value="Sudah">Sudah Punya Lokasi</option>
+                    </select>
+                </div>
+                <div id="additional-address" class="form-input" style="display: none;">
+                    <label for="alamat-usaha">Alamat Lokasi Usaha</label>
+                    <input type="text" id="alamat-usaha" name="alamat-usaha" placeholder="Masukkan alamat lokasi usaha">
+                </div>
+                <!-- Nama Usaha (hidden) -->
+                <div class="form-input" style="display:none;">
+                    <label for="Nama Usaha">Nama Usaha</label>
+                    <input type="text" id="Nama Usaha" name="Nama Usaha" value="Chick Ichik" required
+                        placeholder="Masukkan nama usaha">
+                </div>
+                <div class="form-input">
+                    <label for="dana-usaha">Dana Untuk Buka Usaha</label>
+                    <input type="text" id="dana-usaha" name="dana-usaha" placeholder="Masukkan dana usaha" required>
+                    <!-- Styled price alert message -->
+                    <div id="dana-usaha-error" class="error-message">
+                        <div class="price-alert">
+                            <div class="price-alert-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"/>
+                                    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="price-alert-text">
+                                <span class="price-alert-title">Info Paket:</span>
+                                <span class="price-alert-value">Harga Minimum Paket Usaha Chick Ichik Adalah Rp 2.800.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="sumber-informasi">Sumber Informasi</label>
+                    <select id="sumber-informasi" name="sumber-informasi" required>
+                        <option value="" selected disabled>Pilih Sumber Informasi</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="TikTok">TikTok</option>
+                        <option value="Youtube">Youtube</option>
+                        <option value="Lainnya">Sumber Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-input">
+                    <label for="Kendala">Ceritakan masalahmu, biar kami bantu selesaikan dengan produk kami?</label>
+                    <input type="text" id="Kendala" name="Kendala"
+                        placeholder="Apa masalahmu, biar kami bantu selesaikan!" required>
+                </div>
+                <div class="form-input">
+                    <label for="Keinginan">Kasih tau keinginan kamu, kami bantu wujudkan dengan produk kami?</label>
+                    <input type="text" id="Keinginan" name="Keinginan"
+                        placeholder="Masukkan Keinginan kamu bersama kami" required>
+                </div>
+                <div class="consultation-message">
+                    <p>Setelah isi semua data, dengan klik hubungi admin ini anda akan langsung dapat konsultasi via
+                        WhatsApp dengan team CS kami.</p>
+                </div>
+                <button type="submit" class="submit-btn">Hubungi Admin di WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('partnership-form');
+        const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
+        const additionalAddressDiv = document.getElementById('additional-address');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
+        const danaUsahaInput = document.getElementById('dana-usaha');
+        const danaUsahaError = document.getElementById('dana-usaha-error');
+        const minimumDana = 2800000; // Harga minimum paket usaha
+
+        const adminDetails = [
+            {
+                number: '6281212125422',
+                name: 'Admin Reka',
+            },
+            {
+
+                number: '6281212126722',
+                name: 'Admin Berlian',
+            },
+            {
+                number: '6282124952606',
+                name: 'Admin Livia',
+            }
+        ];
+
+        function formatRupiah(angka) {
+            const numberFormat = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            });
+
+            return numberFormat.format(angka);
+        }
+
+
+        danaUsahaInput.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
+            const numericValue = parseInt(value, 10) || 0; // Convert to number
+
+            // Format ke Rupiah
+            this.value = formatRupiah(value);
+
+            // Validasi nilai minimum
+            if (numericValue < minimumDana && numericValue > 0) {
+                danaUsahaError.style.display = 'block'; // Tampilkan pesan error
+            } else {
+                danaUsahaError.style.display = 'none';  // Sembunyikan pesan error
+            }
+        });
+
+        // Lokasi usaha toggle
+        lokasiUsahaSelect.addEventListener('change', () => {
+            if (lokasiUsahaSelect.value === 'Sudah') {
+                additionalAddressDiv.style.display = 'block';
+            } else {
+                additionalAddressDiv.style.display = 'none';
+            }
+        });
+
+        // Get admin based on the current second
+        function getAdminBasedOnTime() {
+            const currentSecond = new Date().getSeconds();
+
+            if (currentSecond >= 1 && currentSecond <= 20) {
+                return adminDetails[0]; // Admin Berlian (detik 1-20)
+            } else if (currentSecond >= 21 && currentSecond <= 40) {
+                return adminDetails[1]; // Admin Reka (detik 21-40)
+            } else {
+                return adminDetails[2]; // Admin Berlian (detik 41-60)
+            }
+        }
+
+        // Submit form
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitButton = document.querySelector('.submit-btn');
+            if (submitButton.disabled) {
+                return; // Cegah pengiriman ulang jika tombol sudah disabled
+            }
+            submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
+            submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
+
+
+            if (!danaUsahaInput.value) {
+                alert('Silakan masukkan nominal dana usaha');
+                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
+                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                return;
+            }
+
+            // Validasi nilai minimum sebelum submit
+            const numericDana = parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10) || 0;
+            if (numericDana < minimumDana) {
+                danaUsahaError.style.display = 'block';
+                alert('Dana usaha kurang dari minimum yang disyaratkan.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Hubungi Admin di WhatsApp';
+                return;
+            } else {
+                danaUsahaError.style.display = 'none';
+            }
+
+
+            const formData = new FormData(form);
+            const nama = formData.get('nama');
+            const alamat = formData.get('Alamat');
+            const sumberInformasi = formData.get('sumber-informasi');
+            const kendala = formData.get('Kendala');
+            const keinginan = formData.get('Keinginan');
+            const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
+
+            if (lokasiUsahaSelect.value === 'Belum') {
+                formData.set('alamat-usaha', 'Belum Punya');
+            }
+
+            // Sebelum mengirim, hilangkan format Rupiah dan pastikan yang dikirim adalah angka
+            formData.set('dana-usaha', numericDana);
+
+            try {
+                // Get the admin based on time
+                const admin = getAdminBasedOnTime();
+
+                // Send data to Google Sheets including admin
+                formData.append('admin', admin.name);
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // Create WhatsApp message
+                const waMessage = encodeURIComponent(
+                    `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
+                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(numericDana)}.\n` +
+                    `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
+                    `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
+                    `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
+                );
+
+                const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
+
+                // Redirect to WhatsApp
+                window.location.href = waLink;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Pengiriman gagal. Silakan coba lagi.');
+                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
+                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+            }
+        });
+    </script>
+
+</body>
+
+</html>
