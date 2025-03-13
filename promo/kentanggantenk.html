@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kemitraan Kentang Gantenk</title>
+    <title>Kemitraan Esteh Ibukota</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -270,6 +270,64 @@
             background-size: 1.2em;
             padding-right: 2.5rem;
         }
+
+        /* Minimum Budget Warning */
+        .min-budget-warning {
+            display: none;
+            background-color: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .min-budget-warning i {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Investment Package Notice */
+        .investment-package {
+            background: linear-gradient(135deg, var(--primary-color), #065F46);
+            color: white;
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            margin-top: 0.75rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--gold);
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .investment-package h3 {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .investment-package p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .investment-amount {
+            background: var(--gold);
+            color: var(--secondary-color);
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin: 0.5rem 0;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 
@@ -284,10 +342,8 @@
                 <p>📍 Luar Jawa: <span class="promo-highlight">Diskon Ongkir Up To 15%</span></p>
             </div>
             
-            
-
             <div class="welcome-section">
-                <p>Halo Calon Mitra Kentang Gantenk!</p>
+                <p>Halo Calon Mitra Esteh Ibukota!</p>
                 <p>Isi form ini untuk mendaftar sebagai mitra kami.</p>
                 <p>Kami siap membantu mewujudkan bisnis impian Anda.</p>
                 <p>#2025PunyaUsaha</p>
@@ -338,17 +394,23 @@
                 <!-- Hidden input for Nama Usaha -->
                 <div class="form-input" style="display: none;">
                     <label for="Nama Usaha">Nama Usaha</label>
-                    <input type="text" id="Nama Usaha" name="Nama Usaha" value="Kentang Gantenk" required>
+                    <input type="text" id="Nama Usaha" name="Nama Usaha" value="Esteh Ibukota" required>
                 </div>
 
                 <div class="form-input">
                     <label for="dana-usaha">Estimasi Dana yang Disiapkan</label>
                     <input type="text" id="dana-usaha" name="dana-usaha"
                         placeholder="Berapa dana yang Anda siapkan untuk usaha?" required>
+                    <div id="min-budget-alert" class="investment-package">
+                        <h3>✨ Informasi Paket Investasi ✨</h3>
+                        <p>Paket kemitraan Esteh Ibukota dimulai dari</p>
+                        <div class="investment-amount">Rp 2.880.000</div>
+                        <p>Silakan konsultasikan dengan admin kami untuk mendapatkan penawaran terbaik!</p>
+                    </div>
                 </div>
 
                 <div class="form-input">
-                    <label for="sumber-informasi">Tau Kentang Gantenk dari Mana?</label>
+                    <label for="sumber-informasi">Tau Esteh Ibukota dari Mana?</label>
                     <select id="sumber-informasi" name="sumber-informasi" required>
                         <option value="" selected disabled>Pilih Sumber Informasi</option>
                         <option value="Instagram">Instagram</option>
@@ -366,7 +428,7 @@
 
                 <div class="form-input">
                     <label for="Keinginan">Apa Keinginan Anda dengan Membuka Usaha?</label>
-                    <input type="text" id="Keinginan" name="Keinginan" placeholder="Keinginan Anda bersama Kentang Gantenk?"
+                    <input type="text" id="Keinginan" name="Keinginan" placeholder="Keinginan Anda bersama Esteh Ibukota?"
                         required>
                 </div>
 
@@ -386,6 +448,8 @@
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
+        const minBudgetAlert = document.getElementById('min-budget-alert');
+        const minBudgetAmount = 2500000; // 2.5 juta dalam bentuk angka
 
         const adminDetails = [
             {
@@ -417,9 +481,17 @@
 
         danaUsahaInput.addEventListener('input', function () {
             let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
-
+            
             // Format ke Rupiah
             this.value = formatRupiah(value);
+            
+            // Cek apakah nilai dana di bawah 2.5 juta
+            const numericValue = parseInt(value, 10);
+            if (numericValue > 0 && numericValue < minBudgetAmount) {
+                minBudgetAlert.style.display = 'block';
+            } else {
+                minBudgetAlert.style.display = 'none';
+            }
         });
 
         // Lokasi usaha toggle
@@ -438,9 +510,9 @@
             if (currentSecond >= 1 && currentSecond <= 20) {
                 return adminDetails[0]; // Admin Berlian (detik 1-20)
             } else if (currentSecond >= 21 && currentSecond <= 40) {
-                return adminDetails[1]; // Admin Reka (detik 21-40)
+                return adminDetails[1]; // Admin Livia (detik 21-40)
             } else {
-                return adminDetails[2]; // Admin Berlian (detik 41-60)
+                return adminDetails[2]; // Admin Reka (detik 41-60)
             }
         }
 
@@ -459,7 +531,7 @@
             if (!danaUsahaInput.value) {
                 alert('Silakan masukkan nominal dana usaha');
                 submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.textContent = 'Dapatkan Promo'; // Reset teks tombol
                 return;
             }
 
@@ -507,7 +579,7 @@
                 console.error('Error:', error);
                 alert('Pengiriman gagal. Silakan coba lagi.');
                 submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.textContent = 'Dapatkan Promo'; // Reset teks tombol
             }
         });
     </script>
