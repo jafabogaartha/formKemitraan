@@ -258,6 +258,67 @@
                 margin: 20px 0;
             }
         }
+
+        /* Styled price alert */
+        .error-message {
+            display: none; /* Hidden by default */
+            margin-top: 10px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .price-alert {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: var(--border-radius);
+        }
+
+        .price-alert-icon {
+            color: #ff9800;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .price-alert-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-alert-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #f57c00;
+            margin-bottom: 4px;
+        }
+
+        .price-alert-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            .price-alert {
+                padding: 10px;
+            }
+            
+            .price-alert-icon {
+                margin-right: 8px;
+            }
+            
+            .price-alert-title {
+                font-size: 0.85rem;
+            }
+            
+            .price-alert-value {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
@@ -321,6 +382,21 @@
                 <div class="form-input">
                     <label for="dana-usaha">Dana Untuk Buka Usaha</label>
                     <input type="text" id="dana-usaha" name="dana-usaha" placeholder="Masukkan dana usaha" required>
+                    <!-- Styled price alert message -->
+                    <div id="dana-usaha-error" class="error-message">
+                        <div class="price-alert">
+                            <div class="price-alert-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"/>
+                                    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="price-alert-text">
+                                <span class="price-alert-title">Info Paket:</span>
+                                <span class="price-alert-value">Harga Minimum Paket Usaha Merlumer Adalah Rp 2.800.000</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-input">
                     <label for="sumber-informasi">Sumber Informasi</label>
@@ -356,6 +432,9 @@
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
+        const danaUsahaInput = document.getElementById('dana-usaha');
+        const danaUsahaError = document.getElementById('dana-usaha-error');
+        const minimumDana = 2800000; // Harga minimum paket usaha
 
         const adminDetails = [
             {
@@ -363,12 +442,13 @@
                 name: 'Admin Reka',
             },
             {
-                number: '6282124952606',
-                name: 'Admin Livia',
-            },
-            {
+
                 number: '6281212126722',
                 name: 'Admin Berlian',
+            },
+            {
+                number: '6282124952606',
+                name: 'Admin Livia',
             }
         ];
 
@@ -383,13 +463,20 @@
             return numberFormat.format(angka);
         }
 
-        const danaUsahaInput = document.getElementById('dana-usaha');
 
         danaUsahaInput.addEventListener('input', function () {
             let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
+            const numericValue = parseInt(value, 10) || 0; // Convert to number
 
             // Format ke Rupiah
             this.value = formatRupiah(value);
+
+            // Validasi nilai minimum
+            if (numericValue < minimumDana && numericValue > 0) {
+                danaUsahaError.style.display = 'block'; // Tampilkan pesan error
+            } else {
+                danaUsahaError.style.display = 'none';  // Sembunyikan pesan error
+            }
         });
 
         // Lokasi usaha toggle
@@ -433,6 +520,18 @@
                 return;
             }
 
+            // Validasi nilai minimum sebelum submit
+            const numericDana = parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10) || 0;
+            if (numericDana < minimumDana) {
+                danaUsahaError.style.display = 'block';
+                alert('Dana usaha kurang dari minimum yang disyaratkan.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Hubungi Admin di WhatsApp';
+                return;
+            } else {
+                danaUsahaError.style.display = 'none';
+            }
+
 
             const formData = new FormData(form);
             const nama = formData.get('nama');
@@ -446,8 +545,8 @@
                 formData.set('alamat-usaha', 'Belum Punya');
             }
 
-            // Sebelum mengirim, hilangkan format Rupiah
-            formData.set('dana-usaha', parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10));
+            // Sebelum mengirim, hilangkan format Rupiah dan pastikan yang dikirim adalah angka
+            formData.set('dana-usaha', numericDana);
 
             try {
                 // Get the admin based on time
@@ -463,7 +562,7 @@
                 // Create WhatsApp message
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
-                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10))}.\n` +
+                    `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(numericDana)}.\n` +
                     `${kendala ? `\nKendala yang saya hadapi:\n${kendala}` : ''}` +
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
