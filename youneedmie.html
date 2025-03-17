@@ -434,13 +434,14 @@
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
         const danaUsahaInput = document.getElementById('dana-usaha');
         const danaUsahaError = document.getElementById('dana-usaha-error');
-        const minimumDana = 32900000; // Harga minimum paket usaha
+        const minimumDana = 3290000; // Harga minimum paket usaha
     
-        // Daftar admin (termasuk Admin Reka)
+        // Daftar admin
         const adminDetails = [
             { number: '6282124952606', name: 'Admin Livia' },
             { number: '6281212126722', name: 'Admin Berlian' },
-            { number: '6281234086100', name: 'Admin Risma' }
+            { number: '6281234086100', name: 'Admin Risma' },
+            { number: '6281212125422', name: 'Admin Reka' }
         ];
     
         function formatRupiah(angka) {
@@ -472,10 +473,15 @@
     
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-            const totalAdmins = adminDetails.length;
-            const interval = 60 / totalAdmins;
-            const adminIndex = Math.floor(currentSecond / interval);
-            return adminDetails[adminIndex];
+            if (currentSecond >= 1 && currentSecond <= 15) {
+                return adminDetails[0]; // Admin Livia
+            } else if (currentSecond >= 16 && currentSecond <= 30) {
+                return adminDetails[1]; // Admin Berlian
+            } else if (currentSecond >= 31 && currentSecond <= 45) {
+                return adminDetails[2]; // Admin Risma
+            } else {
+                return adminDetails[3]; // Admin Reka
+            }
         }
     
         form.addEventListener('submit', async (e) => {
