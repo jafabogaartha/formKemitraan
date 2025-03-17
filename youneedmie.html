@@ -435,23 +435,14 @@
         const danaUsahaInput = document.getElementById('dana-usaha');
         const danaUsahaError = document.getElementById('dana-usaha-error');
         const minimumDana = 32900000; // Harga minimum paket usaha
-
+    
+        // Daftar admin (termasuk Admin Reka)
         const adminDetails = [
-            {
-                number: '6282124952606',
-                name: 'Admin Livia',
-            },
-            {
-
-                number: '6281212126722',
-                name: 'Admin Berlian',
-            },
-            {
-                number: '6281212126722',
-                name: 'Admin Berlian',
-            }
+            { number: '6282124952606', name: 'Admin Livia' },
+            { number: '6281212126722', name: 'Admin Berlian' },
+            { number: '6281234086100', name: 'Admin Risma' }
         ];
-
+    
         function formatRupiah(angka) {
             const numberFormat = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -459,68 +450,49 @@
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
             });
-
             return numberFormat.format(angka);
         }
-
-
+    
         danaUsahaInput.addEventListener('input', function () {
-            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
-            const numericValue = parseInt(value, 10) || 0; // Convert to number
-
-            // Format ke Rupiah
+            let value = this.value.replace(/\D/g, '');
+            const numericValue = parseInt(value, 10) || 0;
+    
             this.value = formatRupiah(value);
-
-            // Validasi nilai minimum
+    
             if (numericValue < minimumDana && numericValue > 0) {
-                danaUsahaError.style.display = 'block'; // Tampilkan pesan error
+                danaUsahaError.style.display = 'block';
             } else {
-                danaUsahaError.style.display = 'none';  // Sembunyikan pesan error
+                danaUsahaError.style.display = 'none';
             }
         });
-
-        // Lokasi usaha toggle
+    
         lokasiUsahaSelect.addEventListener('change', () => {
-            if (lokasiUsahaSelect.value === 'Sudah') {
-                additionalAddressDiv.style.display = 'block';
-            } else {
-                additionalAddressDiv.style.display = 'none';
-            }
+            additionalAddressDiv.style.display = lokasiUsahaSelect.value === 'Sudah' ? 'block' : 'none';
         });
-
-        // Get admin based on the current second
+    
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-
-            if (currentSecond >= 1 && currentSecond <= 20) {
-                return adminDetails[0]; // Admin Berlian (detik 1-20)
-            } else if (currentSecond >= 21 && currentSecond <= 40) {
-                return adminDetails[1]; // Admin Reka (detik 21-40)
-            } else {
-                return adminDetails[2]; // Admin Berlian (detik 41-60)
-            }
+            const totalAdmins = adminDetails.length;
+            const interval = 60 / totalAdmins;
+            const adminIndex = Math.floor(currentSecond / interval);
+            return adminDetails[adminIndex];
         }
-
-        // Submit form
+    
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
             const submitButton = document.querySelector('.submit-btn');
-            if (submitButton.disabled) {
-                return; // Cegah pengiriman ulang jika tombol sudah disabled
-            }
-            submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
-            submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
-
-
+            if (submitButton.disabled) return;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Mengirim...';
+    
             if (!danaUsahaInput.value) {
                 alert('Silakan masukkan nominal dana usaha');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Hubungi Admin di WhatsApp';
                 return;
             }
-
-            // Validasi nilai minimum sebelum submit
+    
             const numericDana = parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10) || 0;
             if (numericDana < minimumDana) {
                 danaUsahaError.style.display = 'block';
@@ -531,35 +503,30 @@
             } else {
                 danaUsahaError.style.display = 'none';
             }
-
-
+    
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
-            const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
-
+            const namaUsaha = formData.get('Nama Usaha');
+    
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
-
-            // Sebelum mengirim, hilangkan format Rupiah dan pastikan yang dikirim adalah angka
+    
             formData.set('dana-usaha', numericDana);
-
+    
             try {
-                // Get the admin based on time
                 const admin = getAdminBasedOnTime();
-
-                // Send data to Google Sheets including admin
+    
                 formData.append('admin', admin.name);
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
                 });
-
-                // Create WhatsApp message
+    
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
                     `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(numericDana)}.\n` +
@@ -567,19 +534,18 @@
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
-
+    
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
-
-                // Redirect to WhatsApp
                 window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
                 alert('Pengiriman gagal. Silakan coba lagi.');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Hubungi Admin di WhatsApp';
             }
         });
     </script>
+    
 
 </body>
 
