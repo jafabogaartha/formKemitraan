@@ -449,43 +449,30 @@
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
         const minBudgetAlert = document.getElementById('min-budget-alert');
-        const minBudgetAmount = 2500000; // 2.5 juta dalam bentuk angka
-
-        const adminDetails = [
-            {
-                number: '6281212126722',
-                name: 'Admin Berlian',
-            },
-            {
-                number: '6281212125422',
-                name: 'Admin Reka',
-            },
-            {
-                number: '6282124952606',
-                name: 'Admin Livia',
-            }
+        const minBudgetAmount = 2950000; // 2.5 juta dalam bentuk angka
+    
+        // Daftar admin
+        let adminDetails = [
+            { number: '6281212126722', name: 'Admin Berlian' },
+            { number: '6282124952606', name: 'Admin Livia' },
+            { number: '6281234086100', name: 'Admin Risma' }
         ];
-
+    
         function formatRupiah(angka) {
-            const numberFormat = new Intl.NumberFormat('id-ID', {
+            return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
-            });
-
-            return numberFormat.format(angka);
+            }).format(angka);
         }
-
+    
         const danaUsahaInput = document.getElementById('dana-usaha');
-
+    
         danaUsahaInput.addEventListener('input', function () {
-            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
-            
-            // Format ke Rupiah
+            let value = this.value.replace(/\D/g, '');
             this.value = formatRupiah(value);
-            
-            // Cek apakah nilai dana di bawah 2.5 juta
+    
             const numericValue = parseInt(value, 10);
             if (numericValue > 0 && numericValue < minBudgetAmount) {
                 minBudgetAlert.style.display = 'block';
@@ -493,76 +480,67 @@
                 minBudgetAlert.style.display = 'none';
             }
         });
-
-        // Lokasi usaha toggle
+    
         lokasiUsahaSelect.addEventListener('change', () => {
-            if (lokasiUsahaSelect.value === 'Sudah') {
-                additionalAddressDiv.style.display = 'block';
-            } else {
-                additionalAddressDiv.style.display = 'none';
-            }
+            additionalAddressDiv.style.display = lokasiUsahaSelect.value === 'Sudah' ? 'block' : 'none';
         });
-
-        // Get admin based on the current second
+    
+        // **Logika pemilihan admin yang otomatis menyesuaikan**
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-
-            if (currentSecond >= 1 && currentSecond <= 20) {
-                return adminDetails[0]; // Admin Berlian (detik 1-20)
-            } else if (currentSecond >= 21 && currentSecond <= 40) {
-                return adminDetails[1]; // Admin Livia (detik 21-40)
-            } else {
-                return adminDetails[2]; // Admin Reka (detik 41-60)
+            const adminCount = adminDetails.length;
+            const timeSegment = Math.floor(60 / adminCount); // Waktu dibagi rata
+    
+            let selectedAdmin = adminDetails[adminCount - 1]; // Default admin terakhir
+    
+            for (let i = 0; i < adminCount; i++) {
+                if (currentSecond < (i + 1) * timeSegment) {
+                    selectedAdmin = adminDetails[i];
+                    break;
+                }
             }
+    
+            return selectedAdmin;
         }
-
-        // Submit form
+    
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
             const submitButton = document.querySelector('.submit-btn');
-            if (submitButton.disabled) {
-                return; // Cegah pengiriman ulang jika tombol sudah disabled
-            }
-            submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
-            submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
-
-
+            if (submitButton.disabled) return;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Mengirim...';
+    
             if (!danaUsahaInput.value) {
                 alert('Silakan masukkan nominal dana usaha');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Dapatkan Promo'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Dapatkan Promo';
                 return;
             }
-
-
+    
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
-            const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
-
+            const namaUsaha = formData.get('Nama Usaha');
+    
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
-
-            // Sebelum mengirim, hilangkan format Rupiah
+    
             formData.set('dana-usaha', parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10));
-
+    
             try {
-                // Get the admin based on time
                 const admin = getAdminBasedOnTime();
-
-                // Send data to Google Sheets including admin
+    
                 formData.append('admin', admin.name);
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
                 });
-
-                // Create WhatsApp message
+    
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
                     `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10))}.\n` +
@@ -570,19 +548,19 @@
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
-
+    
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
-
-                // Redirect to WhatsApp
+    
                 window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
                 alert('Pengiriman gagal. Silakan coba lagi.');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Dapatkan Promo'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Dapatkan Promo';
             }
         });
     </script>
+    
 
 </body>
 
