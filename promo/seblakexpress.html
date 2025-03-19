@@ -270,6 +270,64 @@
             background-size: 1.2em;
             padding-right: 2.5rem;
         }
+
+        /* Minimum Budget Warning */
+        .min-budget-warning {
+            display: none;
+            background-color: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .min-budget-warning i {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Investment Package Notice */
+        .investment-package {
+            background: linear-gradient(135deg, var(--primary-color), #065F46);
+            color: white;
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            margin-top: 0.75rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--gold);
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .investment-package h3 {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .investment-package p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .investment-amount {
+            background: var(--gold);
+            color: var(--secondary-color);
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin: 0.5rem 0;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 
@@ -284,8 +342,6 @@
                 <p>📍 Luar Jawa: <span class="promo-highlight">Diskon Ongkir Up To 15%</span></p>
             </div>
             
-            
-
             <div class="welcome-section">
                 <p>Halo Calon Mitra Seblak Express!</p>
                 <p>Isi form ini untuk mendaftar sebagai mitra kami.</p>
@@ -345,6 +401,12 @@
                     <label for="dana-usaha">Estimasi Dana yang Disiapkan</label>
                     <input type="text" id="dana-usaha" name="dana-usaha"
                         placeholder="Berapa dana yang Anda siapkan untuk usaha?" required>
+                    <div id="min-budget-alert" class="investment-package">
+                        <h3>✨ Informasi Paket Investasi ✨</h3>
+                        <p>Paket kemitraan Seblak Express dimulai dari</p>
+                        <div class="investment-amount">Rp 4.280.000</div>
+                        <p>Silakan konsultasikan dengan admin kami untuk mendapatkan penawaran terbaik!</p>
+                    </div>
                 </div>
 
                 <div class="form-input">
@@ -386,111 +448,100 @@
         const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
         const additionalAddressDiv = document.getElementById('additional-address');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
-
-        const adminDetails = [
-            {
-                number: '6281212126722',
-                name: 'Admin Berlian',
-            },
-            {
-                number: '6282124952606',
-                name: 'Admin Livia',
-            },
-            {
-                number: '6281212125422',
-                name: 'Admin Reka',
-            }
+        const minBudgetAlert = document.getElementById('min-budget-alert');
+        const minBudgetAmount = 4280000; // 2.5 juta dalam bentuk angka
+    
+        // Daftar admin
+        let adminDetails = [
+            { number: '6281212126722', name: 'Admin Berlian' },
+            { number: '6282124952606', name: 'Admin Livia' },
+            { number: '6281212125422', name: 'Admin Reka' },
+            { number: '6281234086100', name: 'Admin Risma' }
         ];
-
+    
         function formatRupiah(angka) {
-            const numberFormat = new Intl.NumberFormat('id-ID', {
+            return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
-            });
-
-            return numberFormat.format(angka);
+            }).format(angka);
         }
-
+    
         const danaUsahaInput = document.getElementById('dana-usaha');
-
+    
         danaUsahaInput.addEventListener('input', function () {
-            let value = this.value.replace(/\D/g, ''); // Hapus karakter non-angka
-
-            // Format ke Rupiah
+            let value = this.value.replace(/\D/g, '');
             this.value = formatRupiah(value);
-        });
-
-        // Lokasi usaha toggle
-        lokasiUsahaSelect.addEventListener('change', () => {
-            if (lokasiUsahaSelect.value === 'Sudah') {
-                additionalAddressDiv.style.display = 'block';
+    
+            const numericValue = parseInt(value, 10);
+            if (numericValue > 0 && numericValue < minBudgetAmount) {
+                minBudgetAlert.style.display = 'block';
             } else {
-                additionalAddressDiv.style.display = 'none';
+                minBudgetAlert.style.display = 'none';
             }
         });
-
-        // Get admin based on the current second
+    
+        lokasiUsahaSelect.addEventListener('change', () => {
+            additionalAddressDiv.style.display = lokasiUsahaSelect.value === 'Sudah' ? 'block' : 'none';
+        });
+    
+        // **Logika pemilihan admin yang otomatis menyesuaikan**
         function getAdminBasedOnTime() {
             const currentSecond = new Date().getSeconds();
-
-            if (currentSecond >= 1 && currentSecond <= 20) {
-                return adminDetails[0]; // Admin Berlian (detik 1-20)
-            } else if (currentSecond >= 21 && currentSecond <= 40) {
-                return adminDetails[1]; // Admin Reka (detik 21-40)
-            } else {
-                return adminDetails[2]; // Admin Berlian (detik 41-60)
+            const adminCount = adminDetails.length;
+            const timeSegment = Math.floor(60 / adminCount); // Waktu dibagi rata
+    
+            let selectedAdmin = adminDetails[adminCount - 1]; // Default admin terakhir
+    
+            for (let i = 0; i < adminCount; i++) {
+                if (currentSecond < (i + 1) * timeSegment) {
+                    selectedAdmin = adminDetails[i];
+                    break;
+                }
             }
+    
+            return selectedAdmin;
         }
-
-        // Submit form
+    
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
             const submitButton = document.querySelector('.submit-btn');
-            if (submitButton.disabled) {
-                return; // Cegah pengiriman ulang jika tombol sudah disabled
-            }
-            submitButton.disabled = true; // Disable tombol untuk mencegah klik ulang
-            submitButton.textContent = 'Mengirim...'; // Ubah teks tombol
-
-
+            if (submitButton.disabled) return;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Mengirim...';
+    
             if (!danaUsahaInput.value) {
                 alert('Silakan masukkan nominal dana usaha');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Dapatkan Promo';
                 return;
             }
-
-
+    
             const formData = new FormData(form);
             const nama = formData.get('nama');
             const alamat = formData.get('Alamat');
             const sumberInformasi = formData.get('sumber-informasi');
             const kendala = formData.get('Kendala');
             const keinginan = formData.get('Keinginan');
-            const namaUsaha = formData.get('Nama Usaha');  // Get the hidden "Nama Usaha" value
-
+            const namaUsaha = formData.get('Nama Usaha');
+    
             if (lokasiUsahaSelect.value === 'Belum') {
                 formData.set('alamat-usaha', 'Belum Punya');
             }
-
-            // Sebelum mengirim, hilangkan format Rupiah
+    
             formData.set('dana-usaha', parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10));
-
+    
             try {
-                // Get the admin based on time
                 const admin = getAdminBasedOnTime();
-
-                // Send data to Google Sheets including admin
+    
                 formData.append('admin', admin.name);
                 await fetch(scriptURL, {
                     method: 'POST',
                     body: formData,
                 });
-
-                // Create WhatsApp message
+    
                 const waMessage = encodeURIComponent(
                     `Halo kak ${admin.name}, saya ${nama} dari ${alamat}.\n\n` +
                     `Saya tertarik untuk membuka usaha ${namaUsaha} dengan budget ${formatRupiah(parseInt(danaUsahaInput.value.replace(/[^\d]/g, ''), 10))}.\n` +
@@ -498,19 +549,19 @@
                     `${keinginan ? `\n\nKeinginan saya:\n${keinginan}` : ''}` +
                     `\n\nSaya mendapatkan informasi dari: ${sumberInformasi}`
                 );
-
+    
                 const waLink = `https://wa.me/${admin.number}?text=${waMessage}`;
-
-                // Redirect to WhatsApp
+    
                 window.location.href = waLink;
             } catch (error) {
                 console.error('Error:', error);
                 alert('Pengiriman gagal. Silakan coba lagi.');
-                submitButton.disabled = false; // Aktifkan kembali tombol jika ada kesalahan
-                submitButton.textContent = 'Hubungi Admin di WhatsApp'; // Reset teks tombol
+                submitButton.disabled = false;
+                submitButton.textContent = 'Dapatkan Promo';
             }
         });
     </script>
+    
 
 </body>
 
