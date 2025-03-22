@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('partnership-form');
     const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
     const additionalAddressDiv = document.getElementById('additional-address');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }).format(angka);
     }
 
-    danaUsahaInput.addEventListener('input', function() {
+    danaUsahaInput.addEventListener('input', function () {
         let value = this.value.replace(/\D/g, '');
         const numericValue = parseInt(value, 10);
 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return selectedAdmin;
     }
 
-    form.addEventListener('submit', async(e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         if (submitButton.disabled) return; // Cek apakah tombol disabled
