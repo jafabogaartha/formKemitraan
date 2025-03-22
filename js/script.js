@@ -1,6 +1,6 @@
 // Pastikan script.js di-load setelah deklarasi minimumDana di HTML
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('partnership-form');
     const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
     const additionalAddressDiv = document.getElementById('additional-address');
