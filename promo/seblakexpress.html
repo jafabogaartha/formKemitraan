@@ -1,130 +1,315 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kemitraan Seblak Express</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/promo.css">
+    <title>Ramadhan Promo - Telah Berakhir</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans:wght@400;700&display=swap');
+        
+        :root {
+            --primary-color: #1F4E5F;
+            --secondary-color: #F8C48B;
+            --accent-color: #E5B163;
+            --text-color: #333;
+            --light-color: #f9f9f9;
+        }
+        
+        body {
+            font-family: 'Noto Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2C3E50 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" opacity="0.1"><path fill="%23ffffff" d="M86.6,0L50,50l36.6,50L50,150l36.6,50H150l-36.6-50L150,100,113.4,50,150,0Z"/></svg>');
+            background-size: 200px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 550px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        .moon-stars {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            font-size: 4rem;
+        }
+        
+        h1 {
+            font-family: 'Amiri', serif;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .redirecting {
+            color: #777;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        #countdown {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            margin: 0 8px;
+            font-weight: bold;
+        }
+        
+        .loader {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .crescent {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 15px 15px 0 0 var(--accent-color);
+            animation: crescentRotate 3s infinite linear;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: var(--accent-color);
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite;
+        }
+        
+        .star:nth-child(2) {
+            top: 10px;
+            left: 60px;
+            animation-delay: 0.5s;
+        }
+        
+        .star:nth-child(3) {
+            top: 40px;
+            left: 10px;
+            animation-delay: 1s;
+        }
+        
+        .star:nth-child(4) {
+            top: 60px;
+            left: 50px;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes crescentRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lanterns {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.7;
+        }
+        
+        .lantern {
+            width: 40px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 20px;
+            position: relative;
+            animation: sway 5s infinite ease-in-out;
+        }
+        
+        .lantern::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .lantern:nth-child(2) {
+            animation-delay: 0.5s;
+            height: 50px;
+        }
+        
+        .lantern:nth-child(3) {
+            animation-delay: 1s;
+            height: 70px;
+        }
+        
+        .lantern:nth-child(4) {
+            animation-delay: 1.5s;
+            height: 45px;
+        }
+        
+        .lantern:nth-child(5) {
+            animation-delay: 2s;
+            height: 65px;
+        }
+        
+        @keyframes sway {
+            0%, 100% {
+                transform: translateY(0) rotate(3deg);
+            }
+            50% {
+                transform: translateY(10px) rotate(-3deg);
+            }
+        }
+        
+        .decorative-pattern {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" width="100" height="10"><path fill="%231F4E5F" d="M0,0 L10,0 C5,0 5,10 0,10 Z M20,0 L30,0 C25,0 25,10 20,10 Z M40,0 L50,0 C45,0 45,10 40,10 Z M60,0 L70,0 C65,0 65,10 60,10 Z M80,0 L90,0 C85,0 85,10 80,10 Z"/></svg>');
+            background-size: 100px 30px;
+            background-repeat: repeat-x;
+            opacity: 0.2;
+        }
+    </style>
 </head>
-
 <body>
     <div class="container">
-        <div class="form-section">
-
-            <div class="promo-section">
-                <h2>🌙✨ Promo Spesial Ramadhan ✨🌙</h2>
-                <p>🚛 <strong>DISKON ONGKIR</strong></p>
-                <p>📍 Pulau Jawa: <span class="promo-highlight">Diskon Ongkir Up To 25%</span></p>
-                <p>📍 Luar Jawa: <span class="promo-highlight">Diskon Ongkir Up To 15%</span></p>
-            </div>
-
-            <div class="welcome-section">
-                <p>Halo Calon Mitra Seblak Express!</p>
-                <p>Isi form ini untuk mendaftar sebagai mitra kami.</p>
-                <p>Kami siap membantu mewujudkan bisnis impian Anda.</p>
-                <p>#2025PunyaUsaha</p>
-            </div>
-
-            <form name="form-kontak" id="partnership-form">
-                <div class="form-input">
-                    <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap Anda">
-                </div>
-                <div class="form-input">
-                    <label for="Alamat">Alamat</label>
-                    <input type="text" id="Alamat" name="Alamat" required placeholder="Masukkan alamat lengkap">
-                </div>
-                <div class="form-input">
-                    <label for="pekerjaan">Pekerjaan</label>
-                    <input type="text" id="pekerjaan" name="pekerjaan" required placeholder="Masukkan pekerjaan Anda">
-                </div>
-                <div class="form-input">
-                    <label for="Usia">Usia</label>
-                    <input type="number" id="Usia" name="Usia" required min="17" max="65"
-                        placeholder="Masukkan usia Anda">
-                </div>
-                <div class="form-input">
-                    <label for="Opening">Rencana Opening</label>
-                    <input type="text" id="Opening" name="Opening" required
-                        placeholder="Kapan rencana Anda membuka usaha?">
-                </div>
-                <div class="form-input">
-                    <label for="no-hp">Nomor Handphone</label>
-                    <input type="tel" id="no-hp" name="no-hp" pattern="[0-9]{10,14}" required
-                        placeholder="Contoh: 081234567890">
-                </div>
-                <div class="form-input">
-                    <label for="lokasi-usaha">Status Lokasi Usaha</label>
-                    <select id="lokasi-usaha" name="lokasi-usaha" required>
-                        <option value="" selected disabled>Pilih Status Lokasi</option>
-                        <option value="Belum">Belum Punya Lokasi</option>
-                        <option value="Sudah">Sudah Punya Lokasi</option>
-                    </select>
-                </div>
-                <div id="additional-address" class="form-input">
-                    <label for="alamat-usaha">Alamat Lokasi Usaha</label>
-                    <input type="text" id="alamat-usaha" name="alamat-usaha"
-                        placeholder="Masukkan alamat lengkap lokasi usaha Anda">
-                </div>
-
-                <!-- Hidden input for Nama Usaha -->
-                <div class="form-input" style="display: none;">
-                    <label for="Nama Usaha">Nama Usaha</label>
-                    <input type="text" id="Nama Usaha" name="Nama Usaha" value="Seblak Express" required>
-                </div>
-
-                <div class="form-input">
-                    <label for="dana-usaha">Estimasi Dana yang Disiapkan</label>
-                    <input type="text" id="dana-usaha" name="dana-usaha"
-                        placeholder="Berapa dana yang Anda siapkan untuk usaha?" required>
-                    <div id="min-budget-alert" class="investment-package">
-                        <h3>✨ Informasi Paket Investasi ✨</h3>
-                        <p>Paket kemitraan Seblak Express dimulai dari</p>
-                        <div class="investment-amount">Rp 2.550.000</div>
-                        <p>Silakan konsultasikan dengan admin kami untuk mendapatkan penawaran terbaik!</p>
-                    </div>
-                </div>
-
-                <div class="form-input">
-                    <label for="sumber-informasi">Tau Seblak Express dari Mana?</label>
-                    <select id="sumber-informasi" name="sumber-informasi" required>
-                        <option value="" selected disabled>Pilih Sumber Informasi</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="TikTok">TikTok</option>
-                        <option value="Youtube">Youtube</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
-                </div>
-
-                <div class="form-input">
-                    <label for="Kendala">Apa Kendala Anda dalam Memulai Usaha?</label>
-                    <input type="text" id="Kendala" name="Kendala"
-                        placeholder="Ceritakan kendala Anda, biar kami bantu!" required>
-                </div>
-
-                <div class="form-input">
-                    <label for="Keinginan">Apa Keinginan Anda dengan Membuka Usaha?</label>
-                    <input type="text" id="Keinginan" name="Keinginan" placeholder="Keinginan Anda bersama Seblak Express?"
-                        required>
-                </div>
-
-                <div class="consultation-message">
-                    <p>Setelah mengisi form, Anda akan terhubung langsung dengan Admin kami via WhatsApp untuk
-                        konsultasi
-                        lebih lanjut.</p>
-                </div>
-
-                <button type="submit" class="submit-btn">Dapatkan Promo</button>
-            </form>
+        <div class="lanterns">
+            <div class="lantern"></div>
+            <div class="lantern"></div>
+            <div class="lantern"></div>
+            <div class="lantern"></div>
+            <div class="lantern"></div>
         </div>
+        
+        <div class="loader">
+            <div class="crescent"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        
+        <h1>Maaf, Promo Ramadhan Telah Berakhir</h1>
+        <p class="message">Terima kasih telah berpartisipasi dalam promo Ramadhan kami. Kami akan kembali dengan penawaran menarik lainnya segera.</p>
+        <p class="redirecting">
+            <i class="fas fa-arrow-circle-right"></i>
+            Mengalihkan dalam <span id="countdown">3</span> detik
+            <i class="fas fa-arrow-circle-right"></i>
+        </p>
+        
+        <div class="decorative-pattern"></div>
     </div>
+
     <script>
-        const minBudgetAmount = 4280000; // 2.5 juta dalam bentuk angka
+        // Set the target URL
+        const redirectURL = "/seblakexpress";
+        
+        // Countdown timer
+        let seconds = 3;
+        const countdownElement = document.getElementById('countdown');
+        
+        // Update countdown every second
+        const countdownInterval = setInterval(function() {
+            seconds--;
+            countdownElement.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                // Redirect to the target URL
+                window.location.href = redirectURL;
+            }
+        }, 1000);
+        
+        // Also set a backup redirect after a short delay (in case the interval doesn't work)
+        setTimeout(function() {
+            window.location.href = redirectURL;
+        }, 3500);
     </script>
-    <script src="/js/promo.js"></script>
-
 </body>
-
 </html>
