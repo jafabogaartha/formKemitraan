@@ -7,10 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Daftar admin
     const adminDetails = [{
-            number: '6282124952606',
-            name: 'Admin Livia'
-        },
-        {
+
             number: '6285117276822',
             name: 'Admin Berlian'
         },
