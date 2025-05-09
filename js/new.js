@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Daftar admin
     const adminDetails = [
         {
-            number: '6285117276822',
-            name: 'Admin Berlian'
+            number: '6281234086100',
+            name: 'Admin Risma'
         },
         {
             number: '6282124952606',
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
             name: 'Admin Reka'
         },
         {
-            number: '6281234086100',
-            name: 'Admin Risma'
+            number: '6285117276822',
+            name: 'Admin Berlian'
         }
     ];
 
