@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
             name: 'Admin Reka'
         },
         {
-            number: '6285117276822',
-            name: 'Admin Berlian'
+            number: '6281234086100',
+            name: 'Admin Risma'
         }
     ];
 
