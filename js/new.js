@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
         'https://script.google.com/macros/s/AKfycbwJeHleSLg0JQE87Oc4dwYQv509YqIFeu9FNBu6siTFoty3JGl_Q_psdqHN5MnruBs/exec';
 
     // Daftar admin
-    const adminDetails = [
+    const adminDetails = [{
+
+            number: '6285117276822',
+            name: 'Admin Berlian'
+        },
 
         {
             number: '6281234086100',
