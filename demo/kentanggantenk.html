@@ -4,28 +4,28 @@
   <meta charset="UTF-8">
   <title>Kemitraan Kentang Gantenk</title>
 
-  <!-- Import file admin dan script redirect -->
+  <!-- Import data admin -->
   <script src="/js/demo.js"></script>
+
+  <!-- Logic redirect -->
   <script>
-    window.onload = function () {
-  if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
-    const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
+    window.addEventListener("load", function () {
+      if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
+        const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
-    const message = `Hallo kak ${randomAdmin.name}, saya [Nama] dari [Kota], ingin bertanya tentang kemitraan Kentang Gantenk yang di [TikTok/Instagram]. Saya mendapatkan sumber ini dari [.......]`;
+        const message = `Hallo kak ${randomAdmin.name}, saya [Nama] dari [Kota], ingin bertanya tentang kemitraan Kentang Gantenk yang di [TikTok/Instagram]. Saya mendapatkan sumber ini dari [.......]`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
+        const encodedMessage = encodeURIComponent(message);
+        const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
 
-    window.location.href = waLink;
-  } else {
-    document.body.innerHTML = '<h2 style="text-align:center;">Tidak ada admin tersedia saat ini 🙏</h2>';
-  }
-};
-
+        window.location.href = waLink;
+      } else {
+        document.body.innerHTML = '<h2 style="text-align:center;">Tidak ada admin tersedia saat ini 🙏</h2>';
+      }
+    });
   </script>
 </head>
 <body>
   <p style="text-align:center;">Menghubungkan ke WhatsApp Admin...</p>
-  
 </body>
 </html>
