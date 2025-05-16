@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kemitraan Mentoast</title>
+
+  <!-- Import data admin -->
+  <script src="/js/demo.js"></script>
+
+  <!-- Logic redirect -->
+  <script>
+    window.addEventListener("load", function () {
+      if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
+        const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
+
+        const message = `Hallo kak ${randomAdmin.name}, saya [Nama] dari [Kota], ingin bertanya tentang kemitraan Mentoast yang di [TikTok/Instagram].`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
+
+        window.location.href = waLink;
+      } else {
+        document.body.innerHTML = '<h2 style="text-align:center;">Tidak ada admin tersedia saat ini 🙏</h2>';
+      }
+    });
+  </script>
+</head>
+<body>
+  <p style="text-align:center;">Menghubungkan ke WhatsApp Admin...</p>
+</body>
+</html>
+ 
