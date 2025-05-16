@@ -13,7 +13,7 @@
       if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
         const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
-        const message = `Hallo kak ${randomAdmin.name}, saya [Nama] dari [Kota], ingin bertanya tentang kemitraan Kentang Gantenk yang di [TikTok/Instagram]. Saya mendapatkan sumber ini dari [.......]`;
+        const message = `Hallo kak ${randomAdmin.name}, saya [Nama] dari [Kota], ingin bertanya tentang kemitraan Kentang Gantenk yang di [TikTok/Instagram].`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
@@ -29,3 +29,4 @@
   <p style="text-align:center;">Menghubungkan ke WhatsApp Admin...</p>
 </body>
 </html>
+ 
