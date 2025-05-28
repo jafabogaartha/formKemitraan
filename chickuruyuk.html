@@ -10,6 +10,16 @@
   <!-- Logic redirect -->
   <script>
     window.addEventListener("load", function () {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      
+      // Kalau iPhone, redirect ke halaman backup
+      if (isIOS) {
+        window.location.href = "/admin/direct.html";
+        return;
+      }
+
+      // Kalau bukan iPhone (Android atau lainnya), lanjut ke WhatsApp
       if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
         const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
@@ -29,4 +39,3 @@
   <p style="text-align:center;">Menghubungkan ke WhatsApp Admin...</p>
 </body>
 </html>
- 

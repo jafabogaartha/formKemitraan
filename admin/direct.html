@@ -99,9 +99,22 @@
   <h1>Cara Menghubungi Admin Paket Usaha via WhatsApp (iPhone)</h1>
 
   <div class="step">
-    <h3>Langkah 1: Salin Nomor WhatsApp Admin</h3>
+    <h3>Langkah 1: Pilih & Salin Nomor WhatsApp Admin</h3>
     <p>Klik tombol di bawah ini untuk menyalin nomor admin:</p>
-    <button onclick="copyNumber()">📋 Salin Nomor: 0823-2415-9922</button>
+    <ul>
+      <li>
+        <strong>Admin Berlian:</strong> <span id="num1">+62 851-1727-6822</span><br />
+        <button onclick="copyNumber('6285117276822')">📋 Salin Nomor</button>
+      </li>
+      <li>
+        <strong>Admin Risma:</strong> <span id="num2">+62 812-3408-6100</span><br />
+        <button onclick="copyNumber('6281234086100')">📋 Salin Nomor</button>
+      </li>
+      <li>
+        <strong>Admin Reka:</strong> <span id="num3">+62 812-1212-5422</span><br />
+        <button onclick="copyNumber('6281212125422')">📋 Salin Nomor</button>
+      </li>
+    </ul>
     <div id="notif"></div>
   </div>
 
@@ -111,7 +124,7 @@
       <li>Buka aplikasi <strong>Kontak</strong> atau <strong>Telepon</strong>.</li>
       <li>Tekan tombol <strong>+</strong> untuk menambah kontak baru.</li>
       <li>Tempel nomor yang tadi disalin.</li>
-      <li>Simpan dengan nama <strong>Admin Paket Usaha</strong>.</li>
+      <li>Simpan dengan nama sesuai admin yang dipilih.</li>
     </ol>
   </div>
 
@@ -120,7 +133,7 @@
     <ol>
       <li>Buka aplikasi <strong>WhatsApp</strong>.</li>
       <li>Swipe ke bawah untuk refresh daftar kontak.</li>
-      <li>Cari <strong>Admin Paket Usaha</strong>.</li>
+      <li>Cari nama admin yang kamu simpan.</li>
       <li>Klik dan mulai chat!</li>
     </ol>
   </div>
@@ -131,10 +144,9 @@
   </footer>
 
   <script>
-    function copyNumber() {
-      const number = '082324159922';
+    function copyNumber(number) {
       navigator.clipboard.writeText(number).then(() => {
-        document.getElementById('notif').innerText = 'Nomor berhasil disalin!';
+        document.getElementById('notif').innerText = 'Nomor ' + number + ' berhasil disalin!';
       }).catch(() => {
         document.getElementById('notif').innerText = 'Gagal menyalin nomor, coba lagi.';
       });
