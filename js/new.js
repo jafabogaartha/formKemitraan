@@ -13,10 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         {
-            number: '6281234086100',
-            name: 'Admin Risma'
-        },
-        {
 
             number: '6281212125422',
             name: 'Admin Reka'
