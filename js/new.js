@@ -16,10 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         name: 'Admin Reka'
     },
 
-    {
-        number: '6282124952606',
-        name: 'Admin Livia'
-    }
+
     ];
 
     lokasiUsahaSelect.addEventListener('change', () => {
