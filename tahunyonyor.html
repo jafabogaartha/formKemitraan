@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>Kemitraan Tahu Nyonyor</title>
@@ -12,7 +13,7 @@
     window.addEventListener("load", function () {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-      
+
       // Kalau iPhone, redirect ke halaman backup
       if (isIOS) {
         window.location.href = "/admin/direct.html";
@@ -23,7 +24,7 @@
       if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
         const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
-const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota]. Saya tertarik dengan kemitraan Chick Ichik yang saya lihat di [TikTok/Instagram]. Boleh diinfokan bagaimana cara bergabungnya?`;
+        const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota]. Saya tertarik dengan kemitraan Chick Ichik yang saya lihat di [TikTok/Instagram]. Boleh diinfokan bagaimana cara bergabungnya?`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
@@ -35,7 +36,9 @@ const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota
     });
   </script>
 </head>
+
 <body>
   <p style="text-align:center;">Menghubungkan ke WhatsApp Admin...</p>
 </body>
+
 </html>
