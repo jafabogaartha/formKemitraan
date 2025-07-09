@@ -24,7 +24,7 @@
       if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
         const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
-        const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota]. Saya tertarik dengan kemitraan Chick Ichik yang saya lihat di [TikTok/Instagram] _Harap Pilih Salah Satu_. Boleh diinfokan bagaimana cara bergabungnya?`;
+        const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota]. Saya tertarik dengan kemitraan Chick Ichik yang saya lihat di [TikTok/Instagram] _(Harap Pilih Salah Satu_. Boleh diinfokan bagaimana cara bergabungnya?`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
