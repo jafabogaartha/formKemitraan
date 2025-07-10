@@ -8,23 +8,37 @@
   <!-- Import data admin -->
   <script src="/js/demo.js"></script>
 
-  <!-- Logic redirect -->
+   <!-- Logic redirect -->
   <script>
     window.addEventListener("load", function () {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
-      // Kalau iPhone, redirect ke halaman backup
+      // Redirect khusus iOS
       if (isIOS) {
         window.location.href = "/admin/direct.html";
         return;
       }
 
-      // Kalau bukan iPhone (Android atau lainnya), lanjut ke WhatsApp
+      // Lanjut ke WhatsApp jika admin tersedia
       if (typeof adminDetails !== 'undefined' && Array.isArray(adminDetails) && adminDetails.length > 0) {
         const randomAdmin = adminDetails[Math.floor(Math.random() * adminDetails.length)];
 
-        const message = `Hai kak ${randomAdmin.name}, perkenalkan saya [Nama] dari [Kota]. Saya tertarik dengan kemitraan Chick Ichik yang saya lihat di [TikTok/Instagram] _(Harap Pilih Salah Satu_. Boleh diinfokan bagaimana cara bergabungnya?`;
+        // Ambil nama produk dari <title>
+        const productName = document.title.replace(/^Kemitraan\s+/i, '');
+
+        // Format pesan WhatsApp
+        const message =
+          `Halo Kak, salam kenal! 👋
+Saya tertarik dengan produk Kemitraan ${productName} yang ditawarkan dan ingin tahu lebih lanjut mengenai cara bergabung. Mohon informasi detailnya, ya 😊
+
+Berikut data saya:
+
+Nama: 
+Kota Domisili: 
+Dapat Info Dari:
+
+Terima kasih sebelumnya, Kak. Saya tunggu informasinya 🙏`;
 
         const encodedMessage = encodeURIComponent(message);
         const waLink = `https://wa.me/${randomAdmin.number}?text=${encodedMessage}`;
