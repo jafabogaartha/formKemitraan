@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Image Web</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    .image-stack {
+      width: 100%;
+      margin: 0 auto;
+      background: #000;
+    }
+
+    .image-stack img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Media query untuk desktop */
+    @media (min-width: 768px) {
+      body {
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+      }
+
+      .image-stack {
+        width: 390px;
+        margin: 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="image-stack">
+    <img src="assets/gambar (1).jpg" alt="Gambar 1" loading="lazy">
+    <img src="assets/gambar (2).jpg" alt="Gambar 2" loading="lazy">
+    <img src="assets/gambar (3).jpg" alt="Gambar 3" loading="lazy">
+    <img src="assets/gambar (4).jpg" alt="Gambar 4" loading="lazy">
+    <img src="assets/gambar (5).jpg" alt="Gambar 5" loading="lazy">
+    <img src="assets/gambar (6).jpg" alt="Gambar 6" loading="lazy">
+    <img src="assets/gambar (7).jpg" alt="Gambar 7" loading="lazy">
+ 
+  </div>
+
+</body>
+
+</html>
