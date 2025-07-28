@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const lokasiUsahaSelect = document.getElementById('lokasi-usaha');
     const additionalAddressDiv = document.getElementById('additional-address');
     const scriptURL =
-        'https://script.google.com/macros/s/AKfycbyaRaVieKI0ELGniDZiyByHf03b1GXe2qXs66Gs_Vn05EWVVyyUEa65mlxkCZBe5y3I/exec';
+        'https://script.google.com/macros/s/AKfycbyWfdX_cyOIgwr4jJPIgONGrIURVfnr5AScOQRZquof5RgRB5qO1SJ8UQ1qBaT3Co-_/exec';
 
     // Daftar admin
     const adminDetails = [{
