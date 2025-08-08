@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Image Web</title>
-    
+
     <!-- Preload gambar pertama untuk loading prioritas -->
     <link rel="preload" as="image" href="assets/final/Landing Page Es Teh Ibukota CMYK 1_4_11zon.jpg">
-    
+
     <style>
         * {
             margin: 0;
@@ -65,8 +65,13 @@
         }
 
         @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         html {
@@ -155,6 +160,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -253,31 +259,36 @@
 
 <body>
 
-   <div class="image-stack">
+    <div class="image-stack">
         <!-- Gambar pertama dengan prioritas tinggi (tidak lazy loading) -->
-        <img id="img1"
-            src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%201_4_11zon-NfjBSvb7vKLaLDuFSTt97dzdKDmMyV.jpg"
-            alt="Gambar 1" fetchpriority="high">
+        <img id="img1" src="assets/1_1_11zon.jpg" alt="Gambar 1" fetchpriority="high">
 
         <!-- Gambar kedua dengan prioritas normal -->
         <img id="img2"
-            src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%202_2_11zon-MVimdnNh73yx4QXvdWBYwOOAG6DkLc.jpg"
+            src="assets/2_2_11zon.jpg"
             alt="Gambar 2" loading="lazy">
 
         <!-- Gambar ketiga dengan lazy loading -->
-        <img id="img3" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%203_5_11zon-h3dWosmqxQ4cFNZi8hWXbxq6PB56SP.jpg" alt="Gambar 3" loading="lazy">
+        <img id="img3"
+            src="assets/3_3_11zon.jpg"
+            alt="Gambar 3" loading="lazy">
 
         <!-- Gambar keempat dengan lazy loading -->
-        <img id="img4" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%204_3_11zon-9FETQBPHa9QEHiLiZuLCXP1iezv8D5.jpg" alt="Gambar 4" loading="lazy">
+        <img id="img4"
+            src="assets/4_4_11zon.jpg"
+            alt="Gambar 4" loading="lazy">
 
         <!-- Gambar kelima dengan lazy loading -->
-        <img id="img5" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%205_1_11zon-lTWDBZB8FzLM39JCZruKuxFbuwh4Ga.jpg "alt="Gambar 5" loading="lazy">
+        <img id="img5"
+            src="assets/5_5_11zon.jpg"
+            alt="Gambar 5" loading="lazy">
     </div>
 
     <!-- Floating Button -->
     <button class="floating-button" id="openModal">
         <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488"/>
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488" />
         </svg>
         Pesan Sekarang
     </button>
@@ -287,11 +298,13 @@
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <h2>🍹 Es Teh Ibukota</h2>
-            <p>Nikmati kesegaran Es Teh Ibukota yang legendaris! Terbuat dari teh pilihan dengan rasa yang tak terlupakan.</p>
+            <p>Nikmati kesegaran Es Teh Ibukota yang legendaris! Terbuat dari teh pilihan dengan rasa yang tak
+                terlupakan.</p>
             <p><strong>Hubungi kami untuk pemesanan:</strong></p>
             <button class="modal-button" id="contactButton">
                 <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488"/>
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488" />
                 </svg>
                 Hubungi WhatsApp
             </button>
@@ -301,52 +314,52 @@
     <script>
         // Progressive image loading dengan prioritas
         document.addEventListener('DOMContentLoaded', function () {
-            
+
             // Fungsi untuk handle loading gambar dengan prioritas
             function loadImagesProgressively() {
                 const images = document.querySelectorAll('img');
-                
+
                 // Load gambar pertama dengan prioritas tinggi
                 const firstImage = document.getElementById('img1');
                 if (firstImage) {
-                    firstImage.onload = function() {
+                    firstImage.onload = function () {
                         this.classList.add('loaded');
                         // Setelah gambar pertama load, preload gambar kedua
                         preloadNextImage('img2');
                     };
-                    
+
                     // Jika gambar pertama sudah cached, langsung tampilkan
                     if (firstImage.complete) {
                         firstImage.classList.add('loaded');
                         preloadNextImage('img2');
                     }
                 }
-                
+
                 // Setup loading untuk semua gambar
                 images.forEach((img, index) => {
-                    img.onload = function() {
+                    img.onload = function () {
                         this.classList.add('loaded');
                     };
-                    
+
                     // Jika gambar sudah cached
                     if (img.complete) {
                         img.classList.add('loaded');
                     }
                 });
             }
-            
+
             // Fungsi untuk preload gambar berikutnya
             function preloadNextImage(imgId) {
                 const img = document.getElementById(imgId);
                 if (img && !img.classList.contains('loaded')) {
                     const preloader = new Image();
-                    preloader.onload = function() {
+                    preloader.onload = function () {
                         img.classList.add('loaded');
                     };
                     preloader.src = img.src;
                 }
             }
-            
+
             // Intersection Observer untuk lazy loading yang lebih efisien
             if ('IntersectionObserver' in window) {
                 const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -360,17 +373,17 @@
                 }, {
                     rootMargin: '50px 0px' // Mulai load 50px sebelum masuk viewport
                 });
-                
+
                 // Observe semua gambar kecuali yang pertama
                 const lazyImages = document.querySelectorAll('img[loading="lazy"]');
                 lazyImages.forEach(img => {
                     imageObserver.observe(img);
                 });
             }
-            
+
             // Mulai progressive loading
             loadImagesProgressively();
-            
+
             // Modal functionality
             const modal = document.getElementById('myModal');
             const openModalBtn = document.getElementById('openModal');
@@ -378,7 +391,7 @@
             const contactBtn = document.getElementById('contactButton');
 
             // Open modal
-            openModalBtn.addEventListener('click', function() {
+            openModalBtn.addEventListener('click', function () {
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
             });
@@ -392,14 +405,14 @@
             closeModalBtn.addEventListener('click', closeModal);
 
             // Close modal when clicking outside
-            modal.addEventListener('click', function(e) {
+            modal.addEventListener('click', function (e) {
                 if (e.target === modal) {
                     closeModal();
                 }
             });
 
             // Contact button functionality
-            contactBtn.addEventListener('click', function() {
+            contactBtn.addEventListener('click', function () {
                 // Ganti nomor WhatsApp sesuai kebutuhan
                 const phoneNumber = '6281234567890'; // Contoh nomor WhatsApp
                 const message = encodeURIComponent('Halo! Saya tertarik dengan Es Teh Ibukota. Bisa info lebih lanjut?');
@@ -409,12 +422,12 @@
             });
 
             // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && modal.style.display === 'block') {
                     closeModal();
                 }
             });
-            
+
             // JavaScript untuk mencegah drag dan context menu
             const images = document.querySelectorAll('img');
             images.forEach(img => {
