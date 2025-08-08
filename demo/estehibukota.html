@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Image Web</title>
+    
+    <!-- Preload gambar pertama untuk loading prioritas -->
+    <link rel="preload" as="image" href="assets/final/Landing Page Es Teh Ibukota CMYK 1_4_11zon.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fff;
+            overflow-x: hidden;
+            /* Mencegah selection dan drag pada seluruh halaman */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .image-stack {
+            width: 100%;
+            margin: 0 auto;
+            background: #000;
+        }
+
+        .image-stack img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Mencegah drag pada gambar */
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            /* Mencegah selection pada gambar */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Mencegah context menu */
+            pointer-events: none;
+        }
+
+        /* Loading placeholder untuk gambar yang belum dimuat */
+        .image-placeholder {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mencegah drag and drop secara global */
+        * {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+
+        /* Floating Button Styles */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 350px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 48px;
+        }
+
+        .floating-button:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.6);
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        }
+
+        .floating-button:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .whatsapp-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 50% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: calc(100% - 40px);
+            max-width: 400px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            transform: translateY(-50%);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .modal h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .modal p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        }
+
+        /* Media query untuk desktop */
+        @media (min-width: 768px) {
+            body {
+                background: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh;
+            }
+
+            .image-stack {
+                width: 390px;
+                margin: 0;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .floating-button {
+                width: 350px;
+                max-width: 350px;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide images initially for progressive loading */
+        .image-stack img {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .image-stack img.loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+   <div class="image-stack">
+        <!-- Gambar pertama dengan prioritas tinggi (tidak lazy loading) -->
+        <img id="img1"
+            src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%201_4_11zon-NfjBSvb7vKLaLDuFSTt97dzdKDmMyV.jpg"
+            alt="Gambar 1" fetchpriority="high">
+
+        <!-- Gambar kedua dengan prioritas normal -->
+        <img id="img2"
+            src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%202_2_11zon-MVimdnNh73yx4QXvdWBYwOOAG6DkLc.jpg"
+            alt="Gambar 2" loading="lazy">
+
+        <!-- Gambar ketiga dengan lazy loading -->
+        <img id="img3" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%203_5_11zon-h3dWosmqxQ4cFNZi8hWXbxq6PB56SP.jpg" alt="Gambar 3" loading="lazy">
+
+        <!-- Gambar keempat dengan lazy loading -->
+        <img id="img4" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%204_3_11zon-9FETQBPHa9QEHiLiZuLCXP1iezv8D5.jpg" alt="Gambar 4" loading="lazy">
+
+        <!-- Gambar kelima dengan lazy loading -->
+        <img id="img5" src="https://h2rsi9anqnqbkvkf.public.blob.vercel-storage.com/Landing%20Page%20Es%20Teh%20Ibukota%20CMYK%205_1_11zon-lTWDBZB8FzLM39JCZruKuxFbuwh4Ga.jpg "alt="Gambar 5" loading="lazy">
+    </div>
+
+    <!-- Floating Button -->
+    <button class="floating-button" id="openModal">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488"/>
+        </svg>
+        Pesan Sekarang
+    </button>
+
+    <!-- Modal Pop-up -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>🍹 Es Teh Ibukota</h2>
+            <p>Nikmati kesegaran Es Teh Ibukota yang legendaris! Terbuat dari teh pilihan dengan rasa yang tak terlupakan.</p>
+            <p><strong>Hubungi kami untuk pemesanan:</strong></p>
+            <button class="modal-button" id="contactButton">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.484 3.488"/>
+                </svg>
+                Hubungi WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Progressive image loading dengan prioritas
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // Fungsi untuk handle loading gambar dengan prioritas
+            function loadImagesProgressively() {
+                const images = document.querySelectorAll('img');
+                
+                // Load gambar pertama dengan prioritas tinggi
+                const firstImage = document.getElementById('img1');
+                if (firstImage) {
+                    firstImage.onload = function() {
+                        this.classList.add('loaded');
+                        // Setelah gambar pertama load, preload gambar kedua
+                        preloadNextImage('img2');
+                    };
+                    
+                    // Jika gambar pertama sudah cached, langsung tampilkan
+                    if (firstImage.complete) {
+                        firstImage.classList.add('loaded');
+                        preloadNextImage('img2');
+                    }
+                }
+                
+                // Setup loading untuk semua gambar
+                images.forEach((img, index) => {
+                    img.onload = function() {
+                        this.classList.add('loaded');
+                    };
+                    
+                    // Jika gambar sudah cached
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                    }
+                });
+            }
+            
+            // Fungsi untuk preload gambar berikutnya
+            function preloadNextImage(imgId) {
+                const img = document.getElementById(imgId);
+                if (img && !img.classList.contains('loaded')) {
+                    const preloader = new Image();
+                    preloader.onload = function() {
+                        img.classList.add('loaded');
+                    };
+                    preloader.src = img.src;
+                }
+            }
+            
+            // Intersection Observer untuk lazy loading yang lebih efisien
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.classList.add('loaded');
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '50px 0px' // Mulai load 50px sebelum masuk viewport
+                });
+                
+                // Observe semua gambar kecuali yang pertama
+                const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+                lazyImages.forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+            
+            // Mulai progressive loading
+            loadImagesProgressively();
+            
+            // Modal functionality
+            const modal = document.getElementById('myModal');
+            const openModalBtn = document.getElementById('openModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            const contactBtn = document.getElementById('contactButton');
+
+            // Open modal
+            openModalBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+
+            // Close modal
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+
+            closeModalBtn.addEventListener('click', closeModal);
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Contact button functionality
+            contactBtn.addEventListener('click', function() {
+                // Ganti nomor WhatsApp sesuai kebutuhan
+                const phoneNumber = '6281234567890'; // Contoh nomor WhatsApp
+                const message = encodeURIComponent('Halo! Saya tertarik dengan Es Teh Ibukota. Bisa info lebih lanjut?');
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+                closeModal();
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+            
+            // JavaScript untuk mencegah drag dan context menu
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('dragstart', function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+
+                img.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+
+                img.addEventListener('selectstart', function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+            });
+
+            // Mencegah drag secara global
+            document.addEventListener('dragstart', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Mencegah context menu secara global
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Mencegah selection secara global
+            document.addEventListener('selectstart', function (e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
+
+</body>
+
+</html>
